@@ -1,7 +1,7 @@
 import React, { createContext, Component, ReactNode } from "react";
 import { axios } from "../utils/axios";
 
-interface AuthContextType {
+interface IAuthContext {
   authenticated: boolean;
   token: string | null;
   setAuthStatus: (authenticated: boolean, token: string) => void;
@@ -11,7 +11,7 @@ interface PropType {
   children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<IAuthContext | null>(null);
 
 export class AuthProvider extends Component<PropType> {
   state = {

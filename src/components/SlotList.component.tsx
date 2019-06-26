@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Table, Checkbox } from "semantic-ui-react";
-import { Slot } from '../utils/interfaces';
-import { readableDate } from '../utils/tools';
+import { Slot } from "../utils/interfaces";
+import { readableDate } from "../utils/tools";
+import { SlotContext } from "../contexts/Slot.context";
+import { Loader } from "./Loader.component";
 
-interface ISlotListProps {
-  slots: Array<Slot>;
-}
+export const SlotListTable = () => {
+  console.log("render -----> Table");
 
-export const SlotListTable = (props: ISlotListProps) => {
-  return (
+  const slotContext = useContext(SlotContext);
+
+  return slotContext.fetching ? (
+    <Loader size={4} />
+  ) : (
     <Table compact celled>
       <Table.Header>
         <Table.Row>
@@ -19,7 +23,7 @@ export const SlotListTable = (props: ISlotListProps) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {props.slots.map((slot: Slot) => {
+        {slotContext.slots.map((slot: Slot) => {
           return (
             <Table.Row key={slot.id}>
               <Table.Cell>{readableDate(slot.date)}</Table.Cell>
@@ -34,4 +38,4 @@ export const SlotListTable = (props: ISlotListProps) => {
       </Table.Body>
     </Table>
   );
-}
+};

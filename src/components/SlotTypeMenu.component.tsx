@@ -1,29 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Menu, MenuItem, MenuItemProps } from "semantic-ui-react";
+import { SlotContext } from "../contexts/Slot.context";
 
-interface ISlotTypeMenuProps {
-  items: string[];
-  onSelect: (selected: string) => void;
-}
 
-export function SlotTypeMenu(props: ISlotTypeMenuProps) {
-  const [active, setActive] = useState<string>(props.items[0]);
+export function SlotTypeMenu() {
+  console.log("render -----> Menu");
+
+	const slotContext = useContext(SlotContext);
+	
   const itemClickHandler = (e: any, { name }: MenuItemProps) => {
-    setActive(name as string);
-    props.onSelect(name as string);
-  };
+		slotContext.setTypeAndFetchSlots(name as string);
+	};
+	
   return (
     <Menu pointing secondary>
-      {props.items.map((item: string, index: number) => {
-        return (
-          <MenuItem
-            key={index}
-            name={item}
-            active={active === item}
-            onClick={itemClickHandler}
-          />
-        );
-      })}
+			<MenuItem
+				name="morning"
+				active={slotContext.type === "morning"}
+				onClick={itemClickHandler}
+			/>
+			<MenuItem
+				name="afternoon"
+				active={slotContext.type === "afternoon"}
+				onClick={itemClickHandler}
+			/>
     </Menu>
   );
 }

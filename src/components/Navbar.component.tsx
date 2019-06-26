@@ -5,6 +5,7 @@ import Logo from "../utils/assets/nitte-logo.png";
 import { AuthContext } from "../contexts/Auth.context";
 
 export const Navbar = () => {
+
   const authContext = useContext(AuthContext);
   const handleLogout = (e: any) => {
     authContext && authContext.setAuthStatus(false, "");
