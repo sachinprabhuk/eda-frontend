@@ -20,8 +20,8 @@ export class AuthProvider extends Component<PropType> {
   };
 
   setAuthStatus = (authenticated: boolean, token: string) => {
-    this.setState({ authenticated, token });
     localStorage.setItem("eda-token", token);
+    this.setState({ authenticated, token });
   };
 
   async componentDidMount() {
