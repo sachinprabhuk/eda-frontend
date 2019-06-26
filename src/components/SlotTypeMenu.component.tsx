@@ -4,7 +4,6 @@ import { SlotContext } from "../contexts/Slot.context";
 
 
 export function SlotTypeMenu() {
-  console.log("render -----> Menu");
 
 	const slotContext = useContext(SlotContext);
 	

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { AuthContext } from "./contexts/Auth.context";
-import Home from "./containers/Home.container";
+import Home from "./containers/Home";
 import Login from "./containers/Login.container";
 
 const App: React.FC = () => {

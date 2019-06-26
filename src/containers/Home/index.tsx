@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Container, Grid, GridColumn } from "semantic-ui-react";
 
-import { Navbar } from "../components/Navbar.component";
-import { SlotListTable } from "../components/SlotList.component";
-import { SlotTypeMenu } from "../components/SlotTypeMenu.component";
-import { SlotProvider } from "../contexts/Slot.context";
+import { Navbar } from "../../components/Navbar.component";
+import { SlotListTable } from "../../components/SlotListTable.component";
+import { SlotTypeMenu } from "../../components/SlotTypeMenu.component";
+import { SlotProvider } from "../../contexts/Slot.context";
+import { SelectionInfo } from "./SelectionInfo.container";
 
 class Home extends Component {
   render() {
-		console.log("render -----> Home");
     return (
       <>
         <Navbar />
@@ -21,7 +21,9 @@ class Home extends Component {
                 <SlotListTable />
               </GridColumn>
 
-              <GridColumn width={5} floated="right" />
+              <GridColumn width={5} floated="right">
+                <SelectionInfo />
+							</GridColumn>
             </Grid>
           </SlotProvider>
         </Container>
