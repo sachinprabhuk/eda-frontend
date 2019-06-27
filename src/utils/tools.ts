@@ -23,12 +23,12 @@ export const getSlots = (name: string) => {
         ]);
       else
         resolve([
-          { id: "1", date: new Date(2018, 6, 6), total: 10, remaining: 4 },
-          { id: "2", date: new Date(2018, 6, 7), total: 10, remaining: 4 },
-          { id: "3", date: new Date(2018, 6, 8), total: 10, remaining: 4 },
-          { id: "4", date: new Date(2018, 6, 9), total: 10, remaining: 4 },
-          { id: "5", date: new Date(2018, 6, 10), total: 10, remaining: 4 }
+          { id: "6", date: new Date(2018, 6, 6), total: 10, remaining: 4 },
+          { id: "7", date: new Date(2018, 6, 7), total: 10, remaining: 4 },
+          { id: "8", date: new Date(2018, 6, 8), total: 10, remaining: 4 },
+          { id: "9", date: new Date(2018, 6, 9), total: 10, remaining: 4 },
+          { id: "10", date: new Date(2018, 6, 10), total: 10, remaining: 4 }
         ]);
-    }, 2000);
+    }, 200);
   });
 };

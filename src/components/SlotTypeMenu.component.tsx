@@ -4,23 +4,24 @@ import { SlotContext } from "../contexts/Slot.context";
 
 
 export function SlotTypeMenu() {
-
+	console.log("Render => menu")
 	const slotContext = useContext(SlotContext);
 	
   const itemClickHandler = (e: any, { name }: MenuItemProps) => {
-		slotContext.setTypeAndFetchSlots(name as string);
+		let type = name === 'morning' ? 'morn' : 'aft';
+		slotContext.setTypeAndFetchSlots(type);
 	};
 	
   return (
     <Menu pointing secondary>
 			<MenuItem
 				name="morning"
-				active={slotContext.type === "morning"}
+				active={slotContext.type === "morn"}
 				onClick={itemClickHandler}
 			/>
 			<MenuItem
 				name="afternoon"
-				active={slotContext.type === "afternoon"}
+				active={slotContext.type === "aft"}
 				onClick={itemClickHandler}
 			/>
     </Menu>

@@ -1,51 +1,61 @@
-import React, { Component, createContext } from 'react'
-import { Slot } from '../utils/interfaces';
-import { getSlots } from '../utils/tools';
+import React, { Component, createContext } from "react";
+import { Slot } from "../utils/interfaces";
+import { axios } from "../utils/axios";
 
 export interface ISlotContext {
-	type: string
-	slots: Array<Slot>
-	selectedSlotIndices: Array<number>
-	fetching: boolean
-	setTypeAndFetchSlots(type: string): void
+  type: string;
+  slots: Array<Slot>;
+  fetching: boolean;
+  setTypeAndFetchSlots(type: string): void;
 }
 
 export const SlotContext = createContext<ISlotContext>({
-	type: "morning", slots: [], selectedSlotIndices: [], fetching: false,
-	setTypeAndFetchSlots: () => {}
+  type: "morn",
+  slots: [],
+  fetching: false,
+  setTypeAndFetchSlots: () => {}
 });
 
 export class SlotProvider extends Component {
-	state = {
-		type: "morning",
-		slots: [],
-		selectedSlotIndices: [],
-		fetching: true
-	}
+  state = {
+    type: "morn",
+    slots: [],
+    fetching: true
+  };
 
-	async componentDidMount() {
-		// TODO: error handling....
+  fetchSlots = async (type: string) => {
+    try {
+      const { data: slots } = await axios.get("/faculty/slots", {
+        params: { type }
+      })
+      console.log(slots);
+      this.setState({ fetching:false, slots })
+    }catch(e) {
+      this.setState({ fetching: false })
+      console.log(e);
+    }
+  }
 
-		const slots = await getSlots(this.state.type)
-		this.setState({ fetching: false, slots })
-	}
+  async componentDidMount() {
+    await this.fetchSlots('morn')
+  }
 
-	setTypeAndFetchSlots = async (type: string) => {
-		// TODO: error handling....
+  setTypeAndFetchSlots = async (type: string) => {
+    this.setState({ type, fetching: true });
+    await this.fetchSlots(type);
+  };
 
-		this.setState({ type, fetching: true })
-		const slots: Slot[] = await getSlots(type);
-		this.setState({ slots, fetching: false });
-	}
-	
-	render() {
-		return (
-			<SlotContext.Provider value={{
-				...this.state,
-				setTypeAndFetchSlots: this.setTypeAndFetchSlots
-			}}>
-				{this.props.children}
-			</SlotContext.Provider>
-		)
-	}
+  render() {
+    return (
+      <SlotContext.Provider
+        value={{
+          ...this.state,
+          setTypeAndFetchSlots: this.setTypeAndFetchSlots
+        }}
+      >
+        {this.props.children}
+      </SlotContext.Provider>
+    );
+  }
 }
+
