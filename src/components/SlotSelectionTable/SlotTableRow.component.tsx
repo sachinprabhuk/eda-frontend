@@ -1,25 +1,45 @@
-import React from "react";
-import { Table } from "semantic-ui-react";
+import React, { Component } from "react";
+import { Table, Checkbox, CheckboxProps } from "semantic-ui-react";
+import { observer, inject } from "mobx-react";
 
-import { readableDate } from "../../utils/tools";
-import { Slot } from "../../utils/interfaces";
-import { SlotCheckBox } from "./SlotCheckbox.component";
+import { Slot } from "../../shared/interfaces";
+import { readableDate } from "../../shared/tools";
+import { ISlotStore } from "../../stores/Slot.store";
+import { autorun } from "mobx";
 
+interface ISlotTableRow {
+	slot: Slot
+	slotStore?: ISlotStore
+}
 
-export const SlotTableRow = (props: {slot: Slot, type: string}) => {
-	console.log("Render => Row");
-	const selSlot = {
-		date: props.slot.date, 
-		type: props.type
+@inject("slotStore")
+@observer
+export class SlotTableRow extends Component<ISlotTableRow> {
+	constructor(props: ISlotTableRow) {
+		super(props);
+		// autorun(() => {
+		// 	console.log(this.props.slot);
+		// })
 	}
-  return (
-  	<Table.Row key={props.slot.id}>
-  		<Table.Cell>{readableDate(new Date(props.slot.date))}</Table.Cell>
-  		<Table.Cell>{props.slot.total}</Table.Cell>
-  		<Table.Cell>{props.slot.remaining}</Table.Cell>
-  		<Table.Cell collapsing textAlign="center">
-				<SlotCheckBox slotID={props.slot.id} selSlot={selSlot} />
-  		</Table.Cell>
-  	</Table.Row>
-  );
-};
+	checkBoxClickHandler = (e: any, { value, checked }: CheckboxProps) => {
+		this.props.slotStore!.updateSlot(value as string, checked as boolean);
+  };
+	render() {
+		console.log("Render => Row")
+		return (
+			<Table.Row key={this.props.slot.id}>
+				<Table.Cell>{readableDate(new Date(this.props.slot.date))}</Table.Cell>
+				<Table.Cell>{this.props.slot.total}</Table.Cell>
+				<Table.Cell>{this.props.slot.remaining}</Table.Cell>
+				<Table.Cell collapsing textAlign="center">
+					<Checkbox
+						value={this.props.slot.id}
+						onChange={this.checkBoxClickHandler}
+						checked={!!this.props.slot.selected}
+					/>
+				</Table.Cell>
+			</Table.Row>
+		);	
+	}
+}
+

@@ -1,18 +1,24 @@
-import React, { useContext } from "react";
+import React, { Component } from "react";
+import { observer, inject } from "mobx-react";
 
-import { AuthContext } from "./contexts/Auth.context";
-import Home from "./containers/Home";
-import Login from "./containers/Login.container";
+import { IUserStore } from "./stores/User.store";
+import { Home } from './containers/Home'
+import { Login } from './containers/Login.container';
 
-const App: React.FC = () => {
-  const authContext = useContext(AuthContext);
-  return (
-    authContext && authContext.authenticated ? (
+interface IApp {
+  userStore?: IUserStore
+}
+
+@inject("userStore")
+@observer
+export class App extends Component<IApp> {
+  render() {
+    console.log("Render => App");    
+    return this.props.userStore!.token ? (
       <Home />
-    ): (
+    ) : (
       <Login />
     )
-  )
-};
+  }
+}
 
-export default App;

@@ -1,69 +1,108 @@
-import React, { useState, FormEvent, useContext } from "react";
-import { Form, FormField, Button, Message, FormInput } from "semantic-ui-react";
-import { axios } from "../utils/axios";
-import { AuthContext } from "../contexts/Auth.context";
+import React, { FormEvent, Component } from "react";
+import {
+  Form,
+  FormField,
+  Button,
+  Message,
+  FormInput,
+  InputOnChangeData
+} from "semantic-ui-react";
 
-export interface ILoginFormProps {}
+import { axios } from "../shared/axios";
+import { observer, inject } from "mobx-react";
+import { IUserStore } from "../stores/User.store";
+import { observable, transaction } from "mobx";
+import { TextInput } from "./shared/TextInput.component";
 
-export function LoginForm(props: ILoginFormProps) {
-  const [username, setusername] = useState("");
-  const [password, setpassword] = useState("");
-  const [submitState, setSubmitState] = useState({
+interface ILoginFormProps {
+  userStore?: IUserStore;
+}
+
+@inject("userStore")
+@observer
+export class LoginForm extends Component<ILoginFormProps> {
+  formInfo = observable({
+    username: "",
+    password: "",
     loading: false,
     error: ""
-  });
-  const authContext = useContext(AuthContext);
+  })
 
-  const handleSubmit = async (e: FormEvent) => {
+  updateUsername = (e: any, { value }: InputOnChangeData) =>
+    (this.formInfo.username = value);
+  updatePassword = (e: any, { value }: InputOnChangeData) =>
+    (this.formInfo.password = value);
+
+  handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setSubmitState({ ...submitState, loading: true });
+    this.formInfo.loading = true;
     try {
-      if (!username || !password) throw new Error("All fields are mandatory");
-      const { data: token } = await axios.post("/auth/login", {
-        username,
-        password,
+      if (!this.formInfo.username || !this.formInfo.password)
+        throw new Error("All fields are mandatory");
+      const {
+        data: { token, faculty }
+      } = await axios.post("/auth/login", {
+        username: this.formInfo.username,
+        password: this.formInfo.password,
         admin: false
       });
-      authContext && authContext.setAuthStatus(true, token);
+      this.props.userStore!.setTokenAndUser(token, faculty);
     } catch (e) {
-      setSubmitState({
-        ...submitState,
-        loading: false,
-        error: e.response ? e.response.data.message : e.message
+      transaction(() => {
+        this.formInfo.error = e.response ? e.response.data.message : e.message;
+        this.formInfo.loading = false;
       });
     }
   };
-  return (
-    <Form onSubmit={handleSubmit} error={!!submitState.error}>
-      <h2>Login</h2>
-      <FormField required>
+
+  render() {
+    console.log("Render => LoginForm");
+    return (
+      <Form onSubmit={this.handleSubmit} error={!!this.formInfo.error}>
+        <h2>Login</h2>
+        <TextInput
+          name="username"
+          value={this.formInfo.username}
+          onChange={this.updateUsername}
+          error={!!this.formInfo.error}
+          required
+        />
+        <TextInput
+          name="password"
+          value={this.formInfo.password}
+          onChange={this.updatePassword}
+          error={!!this.formInfo.error}
+          required
+        />
+        {/* <FormField required>
         <label>First Name</label>
         <FormInput
-          error={!!submitState.error}
-          value={username}
+          error={!!this.formInfo.error}
+          value={this.formInfo.username}
           required
-          onChange={(e, { value }) => setusername(value)}
+          onChange={this.updateUsername}
         />
       </FormField>
       <FormField required>
         <label>Last Name</label>
         <FormInput
-          error={!!submitState.error}
-          value={password}
+          error={!!this.formInfo.error}
+          value={this.formInfo.password}
           required
-          onChange={(e, { value }) => setpassword(value)}
+          onChange={this.updatePassword}
         />
-      </FormField>
-      <Message error content={submitState.error} />
-      <Button
-        type="submit"
-        fluid
-        onClick={handleSubmit}
-        loading={submitState.loading}
-        positive
-      >
-        Submit
-      </Button>
-    </Form>
-  );
+      </FormField> */}
+        <Message error content={this.formInfo.error} />
+        <Button
+          type="submit"
+          fluid
+          onClick={this.handleSubmit}
+          loading={this.formInfo.loading}
+          positive
+        >
+          Submit
+        </Button>
+      </Form>
+    );
+  }
 }

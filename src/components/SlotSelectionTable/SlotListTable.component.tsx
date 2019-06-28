@@ -1,38 +1,45 @@
-import React, { useContext } from "react";
+import React, { useContext, Component } from "react";
 import { Table } from "semantic-ui-react";
-
-
-import { Slot } from "../../utils/interfaces";
-import { SlotContext } from "../../contexts/Slot.context";
-import { Loader } from "../Loader.component";
-import { SlotTableFooter } from './TableFooter.component';
+import { observer, inject } from "mobx-react";
+import { ISlotStore } from "../../stores/Slot.store";
+import { Loader } from '../shared/Loader.component';
+import { Slot } from "../../shared/interfaces";
 import { SlotTableRow } from "./SlotTableRow.component";
 
-export const SlotListTable = () => {
-	console.log("Render => Table")
+interface ISlotsTable {
+  slotStore?: ISlotStore
+}
 
-  const slotContext = useContext(SlotContext);
+@inject("slotStore")
+@observer
+export class SlotsTable extends Component<ISlotsTable> {
+  componentDidMount() {
+    // this.props.slotStore.fetchSlots()
+  }
+  render() {
+    console.log("Render => Table")
 
-  return slotContext.fetching ? (
-    <Loader size={4} />
-  ) : (
-    <Table compact celled>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Date</Table.HeaderCell>
-          <Table.HeaderCell>Total</Table.HeaderCell>
-          <Table.HeaderCell>Available</Table.HeaderCell>
-          <Table.HeaderCell />
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {slotContext.slots.map((slot: Slot, slotIndex: number) => (
-          <SlotTableRow 
-          key={slotIndex} slot={slot} 
-          type={slotContext.type} />
-        ))}
-      </Table.Body>
-      <SlotTableFooter />
-    </Table>
-  );
-};
+    return this.props.slotStore!.fetchingSlots ? (
+      <Loader size={4} />
+    ) : (
+      <Table compact celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Date</Table.HeaderCell>
+            <Table.HeaderCell>Total</Table.HeaderCell>
+            <Table.HeaderCell>Available</Table.HeaderCell>
+            <Table.HeaderCell />
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {this.props.slotStore!.currentSlots.map((slot: Slot, idx: number) => (
+            <SlotTableRow 
+            key={idx} 
+            slot={slot} />
+          ))}
+        </Table.Body>
+        {/* <SlotTableFooter /> */}
+      </Table>
+    );
+  }
+}

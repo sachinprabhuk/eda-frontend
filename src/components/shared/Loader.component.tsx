@@ -1,13 +1,13 @@
 import React from "react";
 import { Segment, Dimmer, Image, Loader as SUILoader } from "semantic-ui-react";
 
-import LoadingBG from "../utils/assets/loading-bg.png";
+import LoadingBG from '../../shared/assets/loading-bg.png';
 
 interface ILoaderProps {
   size: number;
 }
 
-export const Loader = (props: ILoaderProps) => {
+export function Loader(props: ILoaderProps) {
   return (
     <Segment>
       <Dimmer active inverted>

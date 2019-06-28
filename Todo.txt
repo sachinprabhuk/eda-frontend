@@ -1,5 +1,0 @@
--> make the select slots api return all of the faculties slots
-
--> when state is merged..shallow copy is done
-	so think of having objects..so that they dont change
-	and component re-render wont happen

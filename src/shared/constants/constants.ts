@@ -1,0 +1,4 @@
+export const MORN_SLOT_SELECTED = "morn_slot_selected";
+export const AFT_SLOT_SELECTED = "AFT_SLOT_SELECTED";
+export const MORN_SLOT_DESELECTED = "MORN_SLOT_DESELECTED";
+export const AFT_SLOT_DESELECTED = "AFT_SLOT_DESELECTED";

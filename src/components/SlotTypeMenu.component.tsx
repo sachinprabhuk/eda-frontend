@@ -1,29 +1,35 @@
-import React, { useContext } from "react";
+import React, { Component } from "react";
 import { Menu, MenuItem, MenuItemProps } from "semantic-ui-react";
-import { SlotContext } from "../contexts/Slot.context";
+import { observer, inject } from "mobx-react";
 
+import { ISlotStore } from "../stores/Slot.store";
 
-export function SlotTypeMenu() {
-	console.log("Render => menu")
-	const slotContext = useContext(SlotContext);
-	
-  const itemClickHandler = (e: any, { name }: MenuItemProps) => {
-		let type = name === 'morning' ? 'morn' : 'aft';
-		slotContext.setTypeAndFetchSlots(type);
+interface ISlotTypeMenu {
+	slotStore?: ISlotStore
+}
+@inject("slotStore")
+@observer
+export class SlotTypeMenu extends Component<ISlotTypeMenu> {
+	itemClickHandler = (e: any, { name }: MenuItemProps) => {
+		const type = name === 'morning' ? 'morn' : 'aft';
+		this.props.slotStore!.setSlotsType(type);
 	};
 	
-  return (
-    <Menu pointing secondary>
-			<MenuItem
-				name="morning"
-				active={slotContext.type === "morn"}
-				onClick={itemClickHandler}
-			/>
-			<MenuItem
-				name="afternoon"
-				active={slotContext.type === "aft"}
-				onClick={itemClickHandler}
-			/>
-    </Menu>
-  );
+	render() {
+		console.log("Render => Menu");
+		return (
+			<Menu pointing secondary>
+				<MenuItem
+					name="morning"
+					active={this.props.slotStore!.currentSlotsType === "morn"}
+					onClick={this.itemClickHandler}
+				/>
+				<MenuItem
+					name="afternoon"
+					active={this.props.slotStore!.currentSlotsType === "aft"}
+					onClick={this.itemClickHandler}
+				/>
+			</Menu>
+		);
+	}
 }

@@ -1,18 +1,19 @@
 import React from 'react'
-import { Grid } from 'semantic-ui-react';
+import { Grid, Statistic } from 'semantic-ui-react';
 
-import { SelectedSlots } from '../../components/SelectedSlots.component';
-import AllotedSlots from '../../components/AllotedSlots.components';
+// import AllotedSlots from '../../../ref/components/AllotedSlots.components';
+// import { SlotCount } from '../../../ref/components/SlotCount.component';
 
 export function SelectionInfo() {
 	return (
-		<Grid>
-			<Grid.Row>
-				<SelectedSlots />
-			</Grid.Row>
-			<Grid.Row>
-				<AllotedSlots />
-			</Grid.Row>
-		</Grid>
+		<h1>SelectionInfo</h1>
+		// <Grid>
+		// 	<Grid.Row>
+		// 		<SlotCount />
+		// 	</Grid.Row>
+		// 	<Grid.Row>
+		// 		<AllotedSlots />
+		// 	</Grid.Row>
+		// </Grid>
 	)
 }
