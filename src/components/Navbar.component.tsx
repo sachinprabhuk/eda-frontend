@@ -1,5 +1,12 @@
 import React from "react";
-import { Menu, MenuItem, Image, Icon } from "semantic-ui-react";
+import {
+  Menu,
+  MenuItem,
+  Image,
+  Icon,
+  Container,
+  Button
+} from "semantic-ui-react";
 
 import Logo from "../shared/assets/nitte-logo.png";
 import { inject } from "mobx-react";
@@ -13,18 +20,37 @@ export const Navbar = inject("userStore")(
       props.userStore!.setTokenAndUser(null, null);
     };
 
+    const handleViewSlots = (e: any) => {
+      console.log("hey");
+    };
+
     return (
       <Menu size="small" borderless>
-        <MenuItem name="Logo">
-          <Image src={Logo} size="medium" />
-        </MenuItem>
+        <Container>
+          <MenuItem name="Logo">
+            <Image src={Logo} size="medium" />
+          </MenuItem>
 
-        <MenuItem name="Logout" onClick={handleLogout} position="right">
-          <p style={{ fontSize: "18px" }}>
-            <span style={{ textDecoration: "underline" }}>Logout</span>
-            <Icon name="log out" style={{ marginLeft: "14px" }} />
-          </p>
-        </MenuItem>
+          <Menu.Menu position="right">
+            <MenuItem position="right" name="Alloted slots" color="green">
+              <Button
+                basic
+                onClick={handleViewSlots}
+                color="violet"
+                size="medium"
+                className="AllotedSlotsButton"
+              >
+                Alloted slots
+              </Button>
+            </MenuItem>
+            <MenuItem name="Logout" onClick={handleLogout}>
+              <p style={{ fontSize: "20px" }}>
+                <span style={{ textDecoration: "underline" }}>Logout</span>
+                <Icon name="log out" style={{ marginLeft: "14px" }} />
+              </p>
+            </MenuItem>
+          </Menu.Menu>
+        </Container>
       </Menu>
     );
   }

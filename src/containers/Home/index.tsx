@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, GridColumn } from "semantic-ui-react";
+import { Grid, GridColumn, Container } from "semantic-ui-react";
 import { Navbar } from "../../components/Navbar.component";
 import { SelectionInfo } from "./SelectionInfo.container";
 import { Provider } from "mobx-react";
@@ -24,26 +24,26 @@ export class Home extends Component {
     return (
       <>
         <Navbar />
-        <div style={{ margin: "0px 20px" }}>
+        <Container>
           <Provider slotStore={SlotStoreInstance}>
             <Grid width={16}>
               <Grid.Row>
-                <Grid.Column width={8}>
+                <Grid.Column width={9}>
                   <SlotTypeMenu />
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
-                <GridColumn width={8}>
+                <GridColumn width={9}>
                   <SlotsTable />
                 </GridColumn>
-                <GridColumn width={7} floated="right">
+                <GridColumn width={6} floated="right">
                   <SelectionInfo />
                 </GridColumn>
               </Grid.Row>
             </Grid>
           </Provider>
-        </div>
+        </Container>
       </>
     );
   }

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
-import { Statistic, Grid } from "semantic-ui-react";
+import { Statistic, Grid, Header } from "semantic-ui-react";
 import { ISlotStoreProps, IUserStoreProps } from "../shared/interfaces";
 
 interface ISlotCountProps extends ISlotStoreProps, IUserStoreProps {}
 
+@inject("userStore")
 @inject("slotStore")
 @observer
 export class SlotCount extends Component<ISlotCountProps> {
@@ -14,7 +15,12 @@ export class SlotCount extends Component<ISlotCountProps> {
     return (
       <div>
         <Grid.Row>
-          <h3 style={{ marginBottom: "6px" }}>You can select, </h3>
+          <Header size="medium" style={{ marginBottom: "10px" }}>
+            <span style={{ fontSize: "1.4em" }}>
+              Hello {this.props.userStore!.currentUser!.name}
+            </span>
+            , You can select{" "}
+          </Header>
         </Grid.Row>
         <Grid.Row>
           <Statistic.Group size="small">

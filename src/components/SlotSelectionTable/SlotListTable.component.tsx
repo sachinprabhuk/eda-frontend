@@ -17,7 +17,7 @@ export class SlotsTable extends Component<ISlotsTable> {
     // this.props.slotStore.fetchSlots()
   }
   render() {
-    console.log("Render => Table");
+    console.log("Render => Table", this.props.slotStore!.currentSlots);
 
     return this.props.slotStore!.fetchingSlots ? (
       <Loader size={4} />
