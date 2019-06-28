@@ -6,3 +6,8 @@ export const axios = ax.create({
   },
   baseURL: "/api"
 });
+
+axios.interceptors.request.use((req) => {
+  req.headers.authorization = localStorage.getItem("eda-token")
+  return req;
+})

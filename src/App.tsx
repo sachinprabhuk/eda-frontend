@@ -13,7 +13,6 @@ interface IApp {
 @observer
 export class App extends Component<IApp> {
   render() {
-    console.log("Render => App");    
     return this.props.userStore!.token ? (
       <Home />
     ) : (

@@ -1,12 +1,5 @@
 import React, { FormEvent, Component } from "react";
-import {
-  Form,
-  FormField,
-  Button,
-  Message,
-  FormInput,
-  InputOnChangeData
-} from "semantic-ui-react";
+import { Form, Button, Message, InputOnChangeData } from "semantic-ui-react";
 
 import { axios } from "../shared/axios";
 import { observer, inject } from "mobx-react";
@@ -26,7 +19,7 @@ export class LoginForm extends Component<ILoginFormProps> {
     password: "",
     loading: false,
     error: ""
-  })
+  });
 
   updateUsername = (e: any, { value }: InputOnChangeData) =>
     (this.formInfo.username = value);

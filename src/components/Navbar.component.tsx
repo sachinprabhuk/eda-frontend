@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Menu, MenuItem, Image, Icon, Container } from "semantic-ui-react";
+import React from "react";
+import { Menu, MenuItem, Image, Icon } from "semantic-ui-react";
 
 import Logo from "../shared/assets/nitte-logo.png";
 import { inject } from "mobx-react";
@@ -15,18 +15,16 @@ export const Navbar = inject("userStore")(
 
     return (
       <Menu size="small" borderless>
-        <Container>
-          <MenuItem name="Logo">
-            <Image src={Logo} size="medium" />
-          </MenuItem>
+        <MenuItem name="Logo">
+          <Image src={Logo} size="medium" />
+        </MenuItem>
 
-          <MenuItem name="Logout" onClick={handleLogout} position="right">
-            <p style={{ fontSize: "18px" }}>
-              <span style={{ textDecoration: "underline" }}>Logout</span>
-              <Icon name="log out" style={{ marginLeft: "14px" }} />
-            </p>
-          </MenuItem>
-        </Container>
+        <MenuItem name="Logout" onClick={handleLogout} position="right">
+          <p style={{ fontSize: "18px" }}>
+            <span style={{ textDecoration: "underline" }}>Logout</span>
+            <Icon name="log out" style={{ marginLeft: "14px" }} />
+          </p>
+        </MenuItem>
       </Menu>
     );
   }

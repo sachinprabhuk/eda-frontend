@@ -1,13 +1,13 @@
-import React, { useContext, Component } from "react";
+import React, { Component } from "react";
 import { Table } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 import { ISlotStore } from "../../stores/Slot.store";
-import { Loader } from '../shared/Loader.component';
+import { Loader } from "../shared/Loader.component";
 import { Slot } from "../../shared/interfaces";
 import { SlotTableRow } from "./SlotTableRow.component";
 
 interface ISlotsTable {
-  slotStore?: ISlotStore
+  slotStore?: ISlotStore;
 }
 
 @inject("slotStore")
@@ -17,12 +17,12 @@ export class SlotsTable extends Component<ISlotsTable> {
     // this.props.slotStore.fetchSlots()
   }
   render() {
-    console.log("Render => Table")
+    console.log("Render => Table");
 
     return this.props.slotStore!.fetchingSlots ? (
       <Loader size={4} />
     ) : (
-      <Table compact celled>
+      <Table compact celled striped>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Date</Table.HeaderCell>
@@ -33,9 +33,7 @@ export class SlotsTable extends Component<ISlotsTable> {
         </Table.Header>
         <Table.Body>
           {this.props.slotStore!.currentSlots.map((slot: Slot, idx: number) => (
-            <SlotTableRow 
-            key={idx} 
-            slot={slot} />
+            <SlotTableRow key={idx} slot={slot} />
           ))}
         </Table.Body>
         {/* <SlotTableFooter /> */}
