@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
 import { SlotCount } from "../../components/SlotCount.component";
-import { SelectedSlot } from "../../components/SelectedSlot.component";
+import { InfoAccordion } from "../../components/SelectionInfo/InfoAccordion.component";
 
 export function SelectionInfo() {
   return (
@@ -10,9 +10,8 @@ export function SelectionInfo() {
         <SlotCount />
       </Grid.Row>
       <Grid.Row>
-        <SelectedSlot />
+        <InfoAccordion />
       </Grid.Row>
-      <Grid.Row>{/* <AllotedSlots /> */}</Grid.Row>
     </Grid>
   );
 }

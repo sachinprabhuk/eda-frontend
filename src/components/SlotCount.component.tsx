@@ -24,13 +24,13 @@ export class SlotCount extends Component<ISlotCountProps> {
         </Grid.Row>
         <Grid.Row>
           <Statistic.Group size="small">
-            <Statistic color="orange" horizontal>
+            <Statistic color="orange" horizontal className="noBottomMargin">
               <Statistic.Value>{mornSelectable}</Statistic.Value>
               <Statistic.Label>
                 Morning slot{mornSelectable === 1 ? "" : "s"}
               </Statistic.Label>
             </Statistic>
-            <Statistic color="violet" horizontal>
+            <Statistic color="violet" horizontal className="noBottomMargin">
               <Statistic.Value>{aftSelectable}</Statistic.Value>
               <Statistic.Label>
                 Afternoon slot{aftSelectable === 1 ? "" : "s"}

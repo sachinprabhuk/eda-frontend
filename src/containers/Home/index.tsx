@@ -28,16 +28,16 @@ export class Home extends Component {
           <Provider slotStore={SlotStoreInstance}>
             <Grid width={16}>
               <Grid.Row>
-                <Grid.Column width={9}>
+                <Grid.Column width={7}>
                   <SlotTypeMenu />
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
-                <GridColumn width={9}>
+                <GridColumn width={7}>
                   <SlotsTable />
                 </GridColumn>
-                <GridColumn width={6} floated="right">
+                <GridColumn width={8} floated="right">
                   <SelectionInfo />
                 </GridColumn>
               </Grid.Row>
