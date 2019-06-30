@@ -2,21 +2,19 @@ import React, { Component } from "react";
 import { Table, Label, Icon, Button } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 import { ISlotStore } from "../../stores/Slot.store";
-import { Slot } from "../../shared/interfaces";
+import { Slot, IRootStoreProps } from "../../shared/interfaces";
 import { readableDate } from "../../shared/tools";
 
-interface ISlotTableFooter {
-  slotStore?: ISlotStore;
-}
+interface ISlotTableFooter extends IRootStoreProps {}
 
-@inject("slotStore")
+@inject("rootStore")
 @observer
 export class SlotTableFooter extends Component<ISlotTableFooter> {
   removeSlot = (e: any, { value }: any) => {
-    // this.props.slotStore!.updateSlot()
+    // this.props.rootStore!.slotStore.updateSlot()
   };
   render() {
-    const labels = this.props.slotStore!.selectedSlots.map(
+    const labels = this.props.rootStore!.slotStore.selectedSlots.map(
       (slot: Slot, idx) => {
         let [type, date] = [
           slot.type!.substr(0, 1).toUpperCase(),

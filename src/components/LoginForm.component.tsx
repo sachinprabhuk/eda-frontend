@@ -3,15 +3,13 @@ import { Form, Button, Message, InputOnChangeData } from "semantic-ui-react";
 
 import { axios } from "../shared/axios";
 import { observer, inject } from "mobx-react";
-import { IUserStore } from "../stores/User.store";
 import { observable, transaction } from "mobx";
 import { TextInput } from "./shared/TextInput.component";
+import { IRootStoreProps } from "../shared/interfaces";
 
-interface ILoginFormProps {
-  userStore?: IUserStore;
-}
+interface ILoginFormProps extends IRootStoreProps {}
 
-@inject("userStore")
+@inject("rootStore")
 @observer
 export class LoginForm extends Component<ILoginFormProps> {
   formInfo = observable({
@@ -39,7 +37,7 @@ export class LoginForm extends Component<ILoginFormProps> {
         password: this.formInfo.password,
         admin: false
       });
-      this.props.userStore!.setTokenAndUser(token, faculty);
+      this.props.rootStore!.userStore.setTokenAndUser(token, faculty);
     } catch (e) {
       transaction(() => {
         this.formInfo.error = e.response ? e.response.data.message : e.message;

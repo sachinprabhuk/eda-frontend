@@ -1,9 +1,10 @@
 import { observable, action, runInAction, computed } from "mobx";
 import { Slot } from "../shared/interfaces";
 import { axios } from "../shared/axios";
-import { userStoreInstance as userStore } from "./User.store";
+import { IRootStore } from "./Root.store";
 
 export interface ISlotStore {
+  rootStore: IRootStore;
   currentSlotsType: string;
   morningSlots: Slot[];
   afternoonSlots: Slot[];
@@ -24,6 +25,12 @@ export interface ISlotStore {
 }
 
 export class SlotStore implements ISlotStore {
+  constructor(rootStore: IRootStore) {
+    this.rootStore = rootStore;
+  }
+
+  rootStore: IRootStore;
+
   @observable currentSlotsType: string = "morn";
   @observable morningSlots: Slot[] = [];
   @observable afternoonSlots: Slot[] = [];
@@ -51,16 +58,16 @@ export class SlotStore implements ISlotStore {
   }
 
   @computed get mornSelectable() {
-    const { mornMax } = userStore.currentUser!.slotLim;
-    const { mornAllotedSlotCount } = userStore!;
+    const { mornMax } = this.rootStore.userStore.currentUser!.slotLim;
+    const { mornAllotedSlotCount } = this.rootStore.userStore!;
 
     const morn = mornMax - mornAllotedSlotCount - this.mornSelectionCount;
     return morn;
   }
 
   @computed get aftSelectable() {
-    const { aftMax } = userStore.currentUser!.slotLim;
-    const { aftAllotedSlotCount } = userStore!;
+    const { aftMax } = this.rootStore.userStore.currentUser!.slotLim;
+    const { aftAllotedSlotCount } = this.rootStore.userStore!;
 
     const aft = aftMax - aftAllotedSlotCount - this.aftSelectionCount;
     return aft;
@@ -93,6 +100,8 @@ export class SlotStore implements ISlotStore {
   }
 
   async fetchSlots(type: string) {
+    console.log("heyyyyyyyyyyyyyyyy");
+    console.log(this.currentSlots);
     runInAction(() => (this.fetchingSlots = true));
     try {
       const { data } = await axios.get("/faculty/all-slots", {
@@ -118,5 +127,3 @@ export class SlotStore implements ISlotStore {
     }
   }
 }
-
-export const SlotStoreInstance = new SlotStore();

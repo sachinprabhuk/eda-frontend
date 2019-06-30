@@ -1,5 +1,6 @@
 import { ISlotStore } from "../stores/Slot.store";
 import { IUserStore } from "../stores/User.store";
+import { IRootStore } from "../stores/Root.store";
 
 export interface Slot {
   id: string;
@@ -26,4 +27,8 @@ export interface ISlotStoreProps {
 
 export interface IUserStoreProps {
   userStore?: IUserStore;
+}
+
+export interface IRootStoreProps {
+  rootStore?: IRootStore;
 }

@@ -1,41 +1,49 @@
-import { observable, action, computed } from 'mobx';
-import { Faculty, Slot } from '../shared/interfaces';
+import { observable, action, computed } from "mobx";
+import { Faculty, Slot } from "../shared/interfaces";
+import { IRootStore } from "./Root.store";
 
-export type tokenType = string | null
-export type facultyType = Faculty | null
+export type tokenType = string | null;
+export type facultyType = Faculty | null;
 
 export interface IUserStore {
-	token: tokenType
-	currentUser: facultyType
-	mornAllotedSlotCount: number
-	aftAllotedSlotCount: number
+  rootStore: IRootStore;
 
-	setTokenAndUser(token: tokenType, currentUser: facultyType): void
+  token: tokenType;
+  currentUser: facultyType;
+  mornAllotedSlotCount: number;
+  aftAllotedSlotCount: number;
+
+  setTokenAndUser(token: tokenType, currentUser: facultyType): void;
 }
 
-class UserStore implements IUserStore {
-	@observable token: string | null = null;
-	@observable currentUser: Faculty | null = null;
+export class UserStore implements IUserStore {
+  rootStore: IRootStore;
 
-	@computed get mornAllotedSlotCount() {
-		if(!this.currentUser) return 0;
-		return this.currentUser.selections.filter((sel: Slot) => sel.type === 'morn').length 
-	}
+  constructor(rootStore: IRootStore) {
+    this.rootStore = rootStore;
+  }
 
-	@computed get aftAllotedSlotCount() {
-		if(!this.currentUser) return 0;
-		return this.currentUser.selections.filter((sel: Slot) => sel.type === 'aft').length 
-	}
+  @observable token: string | null = null;
+  @observable currentUser: Faculty | null = null;
 
-	@action setTokenAndUser(token: tokenType, currentUser: facultyType) {
-		if(token === null)
-			localStorage.removeItem("eda-token");
-		else
-			localStorage.setItem("eda-token", token);
+  @computed get mornAllotedSlotCount() {
+    if (!this.currentUser) return 0;
+    return this.currentUser.selections.filter(
+      (sel: Slot) => sel.type === "morn"
+    ).length;
+  }
 
-		this.token = token;
-		this.currentUser = currentUser;
-	}
+  @computed get aftAllotedSlotCount() {
+    if (!this.currentUser) return 0;
+    return this.currentUser.selections.filter((sel: Slot) => sel.type === "aft")
+      .length;
+  }
+
+  @action setTokenAndUser(token: tokenType, currentUser: facultyType) {
+    if (token === null) localStorage.removeItem("eda-token");
+    else localStorage.setItem("eda-token", token);
+
+    this.token = token;
+    this.currentUser = currentUser;
+  }
 }
-
-export const userStoreInstance = new UserStore();

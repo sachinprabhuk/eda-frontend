@@ -1,23 +1,16 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
 
-import { IUserStore } from "./stores/User.store";
-import { Home } from './containers/Home'
-import { Login } from './containers/Login.container';
+import { Home } from "./containers/Home";
+import { Login } from "./containers/Login.container";
+import { IRootStoreProps } from "./shared/interfaces";
 
-interface IApp {
-  userStore?: IUserStore
-}
+interface IApp extends IRootStoreProps {}
 
-@inject("userStore")
+@inject("rootStore")
 @observer
 export class App extends Component<IApp> {
   render() {
-    return this.props.userStore!.token ? (
-      <Home />
-    ) : (
-      <Login />
-    )
+    return this.props.rootStore!.userStore.token ? <Home /> : <Login />;
   }
 }
-

@@ -2,17 +2,15 @@ import React, { Component } from "react";
 import { Menu, MenuItem, MenuItemProps } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 
-import { ISlotStore } from "../stores/Slot.store";
+import { IRootStoreProps } from "../shared/interfaces";
 
-interface ISlotTypeMenu {
-  slotStore?: ISlotStore;
-}
-@inject("slotStore")
+interface ISlotTypeMenu extends IRootStoreProps {}
+@inject("rootStore")
 @observer
 export class SlotTypeMenu extends Component<ISlotTypeMenu> {
   itemClickHandler = (e: any, { name }: MenuItemProps) => {
     const type = name === "morning" ? "morn" : "aft";
-    this.props.slotStore!.setSlotsType(type);
+    this.props.rootStore!.slotStore.setSlotsType(type);
   };
 
   render() {
@@ -22,13 +20,13 @@ export class SlotTypeMenu extends Component<ISlotTypeMenu> {
         <MenuItem
           color="violet"
           name="morning"
-          active={this.props.slotStore!.currentSlotsType === "morn"}
+          active={this.props.rootStore!.slotStore.currentSlotsType === "morn"}
           onClick={this.itemClickHandler}
         />
         <MenuItem
           color="violet"
           name="afternoon"
-          active={this.props.slotStore!.currentSlotsType === "aft"}
+          active={this.props.rootStore!.slotStore.currentSlotsType === "aft"}
           onClick={this.itemClickHandler}
         />
       </Menu>

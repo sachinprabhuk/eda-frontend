@@ -1,31 +1,28 @@
 import React, { Component } from "react";
 import { Grid, GridColumn, Container } from "semantic-ui-react";
 import { LoginForm } from "../components/LoginForm.component";
-import { axios } from '../shared/axios';
+import { axios } from "../shared/axios";
 import { observer, inject } from "mobx-react";
-import { IUserStore } from "../stores/User.store";
+import { IRootStoreProps } from "../shared/interfaces";
 
-interface Props {
-	userStore?: IUserStore
-}
+interface ILoginProps extends IRootStoreProps {}
 
-@inject("userStore")
+@inject("rootStore")
 @observer
-export class Login extends Component<Props> {
+export class Login extends Component<ILoginProps> {
+  async componentDidMount() {
+    const token = localStorage.getItem("eda-token");
 
-	async componentDidMount() {
-		const token = localStorage.getItem("eda-token");
-
-		if (token) {
-			try {
-				const { data: faculty } = await axios.get("/auth/auth-status");
-				this.props.userStore!.setTokenAndUser(token, faculty);
-			} catch (e) {
-				localStorage.removeItem("token");
-				this.props.userStore!.setTokenAndUser(null, null);
-			}
-		}
-	}
+    if (token) {
+      try {
+        const { data: faculty } = await axios.get("/auth/auth-status");
+        this.props.rootStore!.userStore.setTokenAndUser(token, faculty);
+      } catch (e) {
+        localStorage.removeItem("token");
+        this.props.rootStore!.userStore.setTokenAndUser(null, null);
+      }
+    }
+  }
 
   render() {
     console.log("Render => Login");

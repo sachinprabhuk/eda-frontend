@@ -1,27 +1,35 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
 import { Label, Icon, Accordion, Button } from "semantic-ui-react";
-import { ISlotStoreProps, Slot } from "../../shared/interfaces";
+import { Slot, IRootStoreProps } from "../../shared/interfaces";
 import { readableDate } from "../../shared/tools";
 import { NoSlots } from "./NoSlots.component";
 
-interface ISelectedSlot extends ISlotStoreProps {
+interface ISelectedSlot extends IRootStoreProps {
   // activeArray: number[];
   active: boolean;
   clickHandler(e: any, data: any): void;
   index: number;
 }
 
-@inject("slotStore")
+@inject("rootStore")
 @observer
 export class SelectedSlot extends Component<ISelectedSlot> {
   cancelSlot = (e: any, { value }: any) => {
-    this.props.slotStore!.updateSlot(value.id as string, false, value.type);
+    this.props.rootStore!.slotStore.updateSlot(
+      value.id as string,
+      false,
+      value.type
+    );
+  };
+
+  handleSubmit = (e: any) => {
+    // this.props.rootStore!.slotStore.submitSelectedSlots();
   };
   render() {
     console.log("Render => Selected slots");
     // const active = this.props.activeArray.includes(this.props.index);
-    const slots = this.props.slotStore!.selectedSlots;
+    const slots = this.props.rootStore!.slotStore.selectedSlots;
     const message =
       slots.length === 0
         ? "The slots you select will appear here."
@@ -71,7 +79,7 @@ export class SelectedSlot extends Component<ISelectedSlot> {
               textAlign: "center",
               marginTop: "15px",
               display:
-                this.props.slotStore!.selectedSlots.length > 0
+                this.props.rootStore!.slotStore.selectedSlots.length > 0
                   ? "block"
                   : "none"
             }}
@@ -81,7 +89,9 @@ export class SelectedSlot extends Component<ISelectedSlot> {
               labelPosition="right"
               positive
               as="button"
-              disabled={this.props.slotStore!.selectedSlots.length === 0}
+              disabled={
+                this.props.rootStore!.slotStore.selectedSlots.length === 0
+              }
             >
               Submit
               <Icon name="arrow right" />

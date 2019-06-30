@@ -2,47 +2,41 @@ import React, { Component } from "react";
 import { Grid, GridColumn, Container } from "semantic-ui-react";
 import { Navbar } from "../../components/Navbar.component";
 import { SelectionInfo } from "./SelectionInfo.container";
-import { Provider } from "mobx-react";
-import { SlotStoreInstance } from "../../stores/Slot.store";
+import { inject } from "mobx-react";
 import { SlotTypeMenu } from "../../components/SlotTypeMenu.component";
 import { SlotsTable } from "../../components/SlotSelectionTable/SlotListTable.component";
+import { IRootStoreProps } from "../../shared/interfaces";
 
-// import { SlotListTable } from "../../../ref/components/SlotSelectionTable/SlotListTable.component";
-// import { SlotTypeMenu } from "../../../ref/components/SlotTypeMenu.component";
-// import { SlotProvider } from "../../../ref/contexts/Slot.context";
-// import { SelectedSlotProvider } from '../../../ref/contexts/SelectedSlots.context'
+interface IHome extends IRootStoreProps {}
 
-// interface IHome extends IUserStoreProps {}
-
-export class Home extends Component {
+@inject("rootStore")
+export class Home extends Component<IHome> {
   componentDidMount() {
-    SlotStoreInstance.fetchSlots("morn");
+    console.log(this.props.rootStore!);
+    this.props.rootStore!.slotStore.fetchSlots("morn");
   }
-
   render() {
     console.log("Render => Home");
     return (
       <>
         <Navbar />
         <Container>
-          <Provider slotStore={SlotStoreInstance}>
-            <Grid width={16}>
-              <Grid.Row>
-                <Grid.Column width={7}>
-                  <SlotTypeMenu />
-                </Grid.Column>
-              </Grid.Row>
+          <Grid width={16}>
+            <Grid.Row>
+              <Grid.Column width={7}>
+                <SlotTypeMenu />
+              </Grid.Column>
+            </Grid.Row>
 
-              <Grid.Row>
-                <GridColumn width={7}>
-                  <SlotsTable />
-                </GridColumn>
-                <GridColumn width={8} floated="right">
-                  <SelectionInfo />
-                </GridColumn>
-              </Grid.Row>
-            </Grid>
-          </Provider>
+            <Grid.Row>
+              <GridColumn width={7}>
+                <SlotsTable />
+              </GridColumn>
+              <GridColumn width={8} floated="right">
+                <SelectionInfo />
+              </GridColumn>
+            </Grid.Row>
+          </Grid>
         </Container>
       </>
     );

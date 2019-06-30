@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Accordion, Transition } from "semantic-ui-react";
+import { Accordion } from "semantic-ui-react";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
 import { AllotedSlots } from "./AllotedSlots.component";
@@ -14,6 +14,8 @@ export class InfoAccordion extends Component {
     if (index === 0) this.selectedSlotActive = !this.selectedSlotActive;
     else this.allotedSlotActive = !this.allotedSlotActive;
   };
+
+  handleSubmit = (e: any) => {};
 
   render() {
     console.log("Render => InfoAccordion");

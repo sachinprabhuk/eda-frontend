@@ -2,16 +2,14 @@ import React, { Component } from "react";
 import { Table, Checkbox, CheckboxProps } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 
-import { Slot } from "../../shared/interfaces";
+import { Slot, IRootStoreProps } from "../../shared/interfaces";
 import { readableDate } from "../../shared/tools";
-import { ISlotStore } from "../../stores/Slot.store";
 
-interface ISlotTableRow {
+interface ISlotTableRow extends IRootStoreProps {
   slot: Slot;
-  slotStore?: ISlotStore;
 }
 
-@inject("slotStore")
+@inject("rootStore")
 @observer
 export class SlotTableRow extends Component<ISlotTableRow> {
   checkBoxClickHandler = (e: any, { value, checked }: CheckboxProps) => {
@@ -19,13 +17,18 @@ export class SlotTableRow extends Component<ISlotTableRow> {
       currentSlotsType,
       mornSelectable,
       aftSelectable
-    } = this.props.slotStore!;
+    } = this.props.rootStore!.slotStore;
+
     if (
-      (checked && (currentSlotsType === "morn" && mornSelectable <= 0)) ||
-      (currentSlotsType === "aft" && aftSelectable <= 0)
+      checked &&
+      ((currentSlotsType === "morn" && mornSelectable <= 0) ||
+        (currentSlotsType === "aft" && aftSelectable <= 0))
     )
       return;
-    this.props.slotStore!.updateSlot(value as string, checked as boolean);
+    this.props.rootStore!.slotStore.updateSlot(
+      value as string,
+      checked as boolean
+    );
   };
   render() {
     console.log("Render => Row");
