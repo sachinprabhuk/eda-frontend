@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Accordion } from "semantic-ui-react";
+import { Accordion, Transition } from "semantic-ui-react";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
 import { AllotedSlots } from "./AllotedSlots.component";

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
-import { Label, Icon, Accordion } from "semantic-ui-react";
+import { Label, Icon, Accordion, Button } from "semantic-ui-react";
 import { ISlotStoreProps, Slot } from "../../shared/interfaces";
 import { readableDate } from "../../shared/tools";
 import { NoSlots } from "./NoSlots.component";
@@ -66,6 +66,27 @@ export class SelectedSlot extends Component<ISelectedSlot> {
         </Accordion.Title>
         <Accordion.Content active={this.props.active}>
           {content}
+          <div
+            style={{
+              textAlign: "center",
+              marginTop: "15px",
+              display:
+                this.props.slotStore!.selectedSlots.length > 0
+                  ? "block"
+                  : "none"
+            }}
+          >
+            <Button
+              icon
+              labelPosition="right"
+              positive
+              as="button"
+              disabled={this.props.slotStore!.selectedSlots.length === 0}
+            >
+              Submit
+              <Icon name="arrow right" />
+            </Button>
+          </div>
         </Accordion.Content>
       </>
     );
