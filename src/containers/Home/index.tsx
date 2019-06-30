@@ -21,6 +21,15 @@ export class Home extends Component<IHome> {
       <>
         <Navbar />
         <Container>
+          {/* <Grid>
+            <Grid.Column width={7}>
+              <SlotTypeMenu />
+              <SlotsTable />
+            </Grid.Column>
+            <Grid.Column width={8} floated="right">
+              <SelectionInfo />
+            </Grid.Column>
+          </Grid> */}
           <Grid width={16}>
             <Grid.Row>
               <Grid.Column width={7}>

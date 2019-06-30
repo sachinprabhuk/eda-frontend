@@ -13,18 +13,6 @@ interface ISlotTableRow extends IRootStoreProps {
 @observer
 export class SlotTableRow extends Component<ISlotTableRow> {
   checkBoxClickHandler = (e: any, { value, checked }: CheckboxProps) => {
-    const {
-      currentSlotsType,
-      mornSelectable,
-      aftSelectable
-    } = this.props.rootStore!.slotStore;
-
-    if (
-      checked &&
-      ((currentSlotsType === "morn" && mornSelectable <= 0) ||
-        (currentSlotsType === "aft" && aftSelectable <= 0))
-    )
-      return;
     this.props.rootStore!.slotStore.updateSlot(
       value as string,
       checked as boolean

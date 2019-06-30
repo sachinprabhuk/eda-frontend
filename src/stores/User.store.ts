@@ -13,6 +13,7 @@ export interface IUserStore {
   mornAllotedSlotCount: number;
   aftAllotedSlotCount: number;
 
+  updateAllotedSlots(allotedSlots: Slot[]): void;
   setTokenAndUser(token: tokenType, currentUser: facultyType): void;
 }
 
@@ -45,5 +46,12 @@ export class UserStore implements IUserStore {
 
     this.token = token;
     this.currentUser = currentUser;
+  }
+
+  @action updateAllotedSlots(slots: Slot[]) {
+    // if(!this.currentUser) return;
+    slots.forEach(slot => {
+      this.currentUser!.selections.push(slot);
+    });
   }
 }

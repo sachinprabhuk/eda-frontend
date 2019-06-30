@@ -24,7 +24,7 @@ export class SelectedSlot extends Component<ISelectedSlot> {
   };
 
   handleSubmit = (e: any) => {
-    // this.props.rootStore!.slotStore.submitSelectedSlots();
+    this.props.rootStore!.slotStore.submitSelectedSlots();
   };
   render() {
     console.log("Render => Selected slots");
@@ -44,6 +44,7 @@ export class SelectedSlot extends Component<ISelectedSlot> {
         slots.map((slot: Slot) => {
           return (
             <Label
+              basic
               key={slot.id}
               size="large"
               style={{ margin: "6px 6px 6px 0px" }}
@@ -76,7 +77,6 @@ export class SelectedSlot extends Component<ISelectedSlot> {
           {content}
           <div
             style={{
-              textAlign: "center",
               marginTop: "15px",
               display:
                 this.props.rootStore!.slotStore.selectedSlots.length > 0
@@ -87,8 +87,9 @@ export class SelectedSlot extends Component<ISelectedSlot> {
             <Button
               icon
               labelPosition="right"
-              positive
               as="button"
+              color="violet"
+              onClick={this.handleSubmit}
               disabled={
                 this.props.rootStore!.slotStore.selectedSlots.length === 0
               }

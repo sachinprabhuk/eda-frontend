@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Menu,
-  MenuItem,
-  Image,
-  Icon,
-  Container,
-  Button
-} from "semantic-ui-react";
+import { Menu, MenuItem, Image, Icon, Container } from "semantic-ui-react";
 
 import Logo from "../shared/assets/nitte-logo.png";
 import { inject } from "mobx-react";
@@ -18,9 +11,9 @@ export const Navbar = inject("rootStore")((props: IRootStoreProps) => {
     props.rootStore!.userStore.setTokenAndUser(null, null);
   };
 
-  const handleViewSlots = (e: any) => {
-    console.log("hey");
-  };
+  // const handleViewSlots = (e: any) => {
+  //   console.log("hey");
+  // };
 
   return (
     <Menu size="small" borderless>
@@ -30,7 +23,7 @@ export const Navbar = inject("rootStore")((props: IRootStoreProps) => {
         </MenuItem>
 
         <Menu.Menu position="right">
-          <MenuItem position="right" name="Alloted slots" color="green">
+          {/* <MenuItem position="right" name="Alloted slots" color="green">
             <Button
               basic
               onClick={handleViewSlots}
@@ -40,7 +33,7 @@ export const Navbar = inject("rootStore")((props: IRootStoreProps) => {
             >
               Alloted slots
             </Button>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem name="Logout" onClick={handleLogout}>
             <p style={{ fontSize: "20px" }}>
               <span style={{ textDecoration: "underline" }}>Logout</span>
