@@ -37,7 +37,7 @@ export class LoginForm extends Component<ILoginFormProps> {
         password: this.formInfo.password,
         admin: false
       });
-      this.props.rootStore!.userStore.setTokenAndUser(token, faculty);
+      this.props.rootStore!.userStore.login(token, faculty);
     } catch (e) {
       transaction(() => {
         this.formInfo.error = e.response ? e.response.data.message : e.message;

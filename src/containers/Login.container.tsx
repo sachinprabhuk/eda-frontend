@@ -16,10 +16,10 @@ export class Login extends Component<ILoginProps> {
     if (token) {
       try {
         const { data: faculty } = await axios.get("/auth/auth-status");
-        this.props.rootStore!.userStore.setTokenAndUser(token, faculty);
+        this.props.rootStore!.userStore.login(token, faculty);
       } catch (e) {
         localStorage.removeItem("token");
-        this.props.rootStore!.userStore.setTokenAndUser(null, null);
+        this.props.rootStore!.userStore.logout();
       }
     }
   }

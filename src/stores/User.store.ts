@@ -14,13 +14,16 @@ export interface IUserStore {
   aftAllotedSlotCount: number;
 
   updateAllotedSlots(allotedSlots: Slot[]): void;
-  setTokenAndUser(token: tokenType, currentUser: facultyType): void;
+
+  login(token: string, currentUser: facultyType): void;
+  logout(): void;
 }
 
 export class UserStore implements IUserStore {
   rootStore: IRootStore;
 
   constructor(rootStore: IRootStore) {
+    console.log("%c User store initialized...", "color: green;font-size: 18px");
     this.rootStore = rootStore;
   }
 
@@ -40,12 +43,20 @@ export class UserStore implements IUserStore {
       .length;
   }
 
-  @action setTokenAndUser(token: tokenType, currentUser: facultyType) {
-    if (token === null) localStorage.removeItem("eda-token");
-    else localStorage.setItem("eda-token", token);
-
+  @action login(token: string, faculty: facultyType) {
+    if (!token || !faculty) return;
+    localStorage.setItem("eda-token", token);
+    this.rootStore.activateSlotStore();
     this.token = token;
-    this.currentUser = currentUser;
+    this.currentUser = faculty;
+  }
+
+  @action logout() {
+    localStorage.removeItem("eda-token");
+    console.log("%c deleting slot store..", "color: red;font-size: 18px");
+    delete this.rootStore.slotStore;
+    this.token = null;
+    this.currentUser = null;
   }
 
   @action updateAllotedSlots(slots: Slot[]) {

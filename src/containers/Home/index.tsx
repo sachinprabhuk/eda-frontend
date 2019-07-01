@@ -13,7 +13,7 @@ interface IHome extends IRootStoreProps {}
 export class Home extends Component<IHome> {
   componentDidMount() {
     console.log(this.props.rootStore!);
-    this.props.rootStore!.slotStore.fetchSlots("morn");
+    this.props.rootStore!.slotStore.fetchSlots();
   }
   render() {
     console.log("Render => Home");

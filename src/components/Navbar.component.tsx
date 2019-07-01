@@ -8,7 +8,7 @@ import { IRootStoreProps } from "../shared/interfaces";
 export const Navbar = inject("rootStore")((props: IRootStoreProps) => {
   console.log("Render => navbar");
   const handleLogout = (e: any) => {
-    props.rootStore!.userStore.setTokenAndUser(null, null);
+    props.rootStore!.userStore.logout();
   };
 
   // const handleViewSlots = (e: any) => {

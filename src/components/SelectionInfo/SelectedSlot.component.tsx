@@ -93,6 +93,7 @@ export class SelectedSlot extends Component<ISelectedSlot> {
               disabled={
                 this.props.rootStore!.slotStore.selectedSlots.length === 0
               }
+              loading={this.props.rootStore!.slotStore.submittingSlots}
             >
               Submit
               <Icon name="arrow right" />

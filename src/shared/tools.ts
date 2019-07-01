@@ -11,14 +11,22 @@ export const readableDate = (date: Date) => {
   return `${datePrefix}${date_} / ${monthPrefix}${month} / ${year}`;
 };
 
-export const showToast = (type: string, title: string, description: string) => {
-  toast({
+export const showToast = (
+  type: string,
+  title: string,
+  description: string,
+  errorList?: string[]
+) => {
+  const toastConfig: any = {
     type,
     icon: "cancel",
     title,
     description,
+    time: 7500,
     animation: "bounce",
-    time: 7000,
     size: "large"
-  });
+  };
+  if (errorList) toastConfig.list = errorList;
+
+  toast(toastConfig);
 };

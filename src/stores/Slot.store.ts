@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed } from "mobx";
+import { observable, action, computed, flow } from "mobx";
 import { Slot } from "../shared/interfaces";
 import { axios } from "../shared/axios";
 import { IRootStore } from "./Root.store";
@@ -10,24 +10,26 @@ export interface ISlotStore {
   morningSlots: Slot[];
   afternoonSlots: Slot[];
   currentSlots: Slot[];
-  fetchingSlots: boolean;
   selectedSlots: Slot[];
   mornSelectionCount: number;
   aftSelectionCount: number;
   mornSelectable: number;
   aftSelectable: number;
 
+  fetchingSlots: boolean;
+  submittingSlots: boolean;
+
   setSlotsType(slotsType: string): void;
-  // setSlots(slots: Slot[]): void;
   setFetchingSlots(fetching: boolean): void;
   updateSlot(slotID: string, selectSlot: boolean, type?: string): void;
 
-  fetchSlots(type: string): void;
+  fetchSlots(): void;
   submitSelectedSlots(): void;
 }
 
 export class SlotStore implements ISlotStore {
   constructor(rootStore: IRootStore) {
+    console.log("%c slot store initialized...", "color: green;font-size: 18px");
     this.rootStore = rootStore;
   }
 
@@ -37,6 +39,7 @@ export class SlotStore implements ISlotStore {
   @observable morningSlots: Slot[] = [];
   @observable afternoonSlots: Slot[] = [];
   @observable fetchingSlots: boolean = false;
+  @observable submittingSlots = false;
 
   @computed get currentSlots(): Slot[] {
     if (this.currentSlotsType === "morn") return this.morningSlots;
@@ -77,20 +80,14 @@ export class SlotStore implements ISlotStore {
 
   @action setSlotsType(slotsType: string) {
     this.currentSlotsType = slotsType;
-    // this.fetchSlots(slotsType);
   }
 
   @action setFetchingSlots(value: boolean) {
     this.fetchingSlots = value;
   }
 
-  // @action setSlots(slots: Slot[]) {
-  //   this.currentSlots = slots;
-  // }
-
   @action updateSlot(slotID: string, selectSlot: boolean, type?: string) {
     // check if u can select (exceeded slot lim)
-    console.log("hey");
     if (selectSlot) {
       if (this.currentSlotsType === "morn" && this.mornSelectable <= 0) {
         showToast("error", "Cant select this slot", "Morning quota reached");
@@ -116,13 +113,11 @@ export class SlotStore implements ISlotStore {
       if (selectSlot) {
         // check if the date is already selected
         if (this.selectedSlots.find(slt => slt.date === currSlot.date)) {
-          // error handling...
           showToast(
             "error",
             "cant select slot",
             "You have already selected a slot on this date\n uncheck it to select the current one."
           );
-          console.log("cant select bitchhh");
           return;
         }
       }
@@ -132,36 +127,36 @@ export class SlotStore implements ISlotStore {
     }
   }
 
-  async fetchSlots(type?: string) {
-    runInAction(() => (this.fetchingSlots = true));
+  fetchSlots = flow(function*(this: SlotStore) {
+    this.fetchingSlots = true;
     try {
-      // const { data } = await axios.get("/faculty/all-slots", {
-      //   params: { type }
-      // });
-      const { data } = await axios.get("/faculty/all-slots");
+      const { data } = yield axios.get("/faculty/slots");
       console.log("Slots fetched", data);
-      runInAction(() => {
-        this.fetchingSlots = false;
-        const [mornSlots, aftSlots] = data.reduce(
-          (acc: any, curr: any) => {
-            if (curr.type === "morn") acc[0].push(curr);
-            else acc[1].push(curr);
-            return acc;
-          },
-          [[], []]
-        );
-        this.morningSlots = observable(mornSlots);
-        this.afternoonSlots = observable(aftSlots);
-      });
+      const [mornSlots, aftSlots] = data.reduce(
+        (acc: any, curr: any) => {
+          if (curr.type === "morn") acc[0].push(curr);
+          else acc[1].push(curr);
+          return acc;
+        },
+        [[], []]
+      );
+      this.morningSlots = observable(mornSlots);
+      this.afternoonSlots = observable(aftSlots);
     } catch (e) {
+      showToast(
+        "error",
+        "Ooop! something went wrong!!",
+        "Error while fetching slot data..Try refreshing!"
+      );
       console.log(e);
-      runInAction(() => (this.fetchingSlots = false));
     }
-  }
+    this.fetchingSlots = false;
+  });
 
-  async submitSelectedSlots() {
+  submitSelectedSlots = flow(function*(this: SlotStore) {
+    this.submittingSlots = true;
     try {
-      const { data } = await axios.post("/faculty/select-slots", {
+      const { data } = yield axios.post("/faculty/select-slots", {
         slotIDs: this.selectedSlots.map((slot: Slot) => slot.id)
       });
       const { allotedSlots, errors } = data;
@@ -169,16 +164,25 @@ export class SlotStore implements ISlotStore {
       console.log("Alloted ", allotedSlots);
       console.log("errors", errors);
       if (errors.length > 0) {
-        // some logic to show errors
-        console.log(errors);
+        showToast(
+          "error",
+          "Sorry some slots couldnt be selected",
+          "",
+          errors.map((el: any) => `${el.message} ${el.data}`)
+        );
       }
-      runInAction(() =>
-        this.rootStore.userStore.updateAllotedSlots(allotedSlots)
-      );
-      await this.fetchSlots();
+
+      this.rootStore.userStore.updateAllotedSlots(allotedSlots);
+
+      yield this.fetchSlots();
     } catch (e) {
-      // some logic to show errors
+      showToast(
+        "error",
+        "Error while selecting slots",
+        "Couldn't select some slots..."
+      );
       console.log(e);
     }
-  }
+    this.submittingSlots = false;
+  });
 }

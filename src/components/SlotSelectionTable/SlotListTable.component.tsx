@@ -10,12 +10,10 @@ interface ISlotsTable extends IRootStoreProps {}
 @inject("rootStore")
 @observer
 export class SlotsTable extends Component<ISlotsTable> {
-  componentDidMount() {
-    // this.props.slotStore.fetchSlots()
-  }
   render() {
     console.log(
       "Render => Table",
+      this.props.rootStore!.slotStore.fetchingSlots,
       this.props.rootStore!.slotStore.currentSlots
     );
 
