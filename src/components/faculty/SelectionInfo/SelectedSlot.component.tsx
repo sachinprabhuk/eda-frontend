@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
 import { Label, Icon, Accordion, Button } from "semantic-ui-react";
-import { Slot, IRootStoreProps } from "../../shared/interfaces";
-import { readableDate } from "../../shared/tools";
+import { Slot, IRootStoreProps } from "../../../shared/interfaces";
+import { readableDate } from "../../../shared/tools";
 import { NoSlots } from "./NoSlots.component";
 
 interface ISelectedSlot extends IRootStoreProps {

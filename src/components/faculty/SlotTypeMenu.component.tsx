@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Menu, MenuItem, MenuItemProps } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 
-import { IRootStoreProps } from "../shared/interfaces";
+import { IRootStoreProps } from "../../shared/interfaces";
 
 interface ISlotTypeMenu extends IRootStoreProps {}
 @inject("rootStore")

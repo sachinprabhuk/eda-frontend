@@ -5,7 +5,7 @@ import { Provider } from "mobx-react";
 import "./index.css";
 import { App } from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { RootStoreInstance } from "./stores/Root.store";
+import { RootStoreInstance } from "./stores/faculty/Root.store";
 
 ReactDOM.render(
   <Provider rootStore={RootStoreInstance}>

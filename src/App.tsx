@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
 
-import { Home } from "./containers/Home";
-import { Login } from "./containers/Login.container";
+import { Home } from "./containers/faculty/Home";
+import { Login } from "./containers/faculty/Login.container";
 import { IRootStoreProps } from "./shared/interfaces";
 // @ts-ignore
 import { SemanticToastContainer } from "react-semantic-toasts";

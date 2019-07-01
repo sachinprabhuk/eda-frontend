@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Accordion, Icon, Segment, List } from "semantic-ui-react";
-import { IRootStoreProps } from "../../shared/interfaces";
+import { IRootStoreProps } from "../../../shared/interfaces";
 import { observer, inject } from "mobx-react";
 import { NoSlots } from "./NoSlots.component";
-import { readableDate } from "../../shared/tools";
+import { readableDate } from "../../../shared/tools";
 
 interface IAllotedSlotsProps extends IRootStoreProps {
   // activeArray: number[];

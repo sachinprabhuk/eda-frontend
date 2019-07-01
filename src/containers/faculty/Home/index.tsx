@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Grid, GridColumn, Container } from "semantic-ui-react";
-import { Navbar } from "../../components/Navbar.component";
+import { Navbar } from "../../../components/faculty/Navbar.component";
 import { SelectionInfo } from "./SelectionInfo.container";
 import { inject } from "mobx-react";
-import { SlotTypeMenu } from "../../components/SlotTypeMenu.component";
-import { SlotsTable } from "../../components/SlotSelectionTable/SlotListTable.component";
-import { IRootStoreProps } from "../../shared/interfaces";
+import { SlotTypeMenu } from "../../../components/faculty/SlotTypeMenu.component";
+import { SlotsTable } from "../../../components/faculty/SlotSelectionTable/SlotListTable.component";
+import { IRootStoreProps } from "../../../shared/interfaces";
 
 interface IHome extends IRootStoreProps {}
 

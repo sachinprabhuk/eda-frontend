@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 import { Loader } from "../shared/Loader.component";
-import { Slot, IRootStoreProps } from "../../shared/interfaces";
+import { Slot, IRootStoreProps } from "../../../shared/interfaces";
 import { SlotTableRow } from "./SlotTableRow.component";
 
 interface ISlotsTable extends IRootStoreProps {}

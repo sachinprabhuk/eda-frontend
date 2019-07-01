@@ -1,5 +1,5 @@
 import { observable, action, computed } from "mobx";
-import { Faculty, Slot } from "../shared/interfaces";
+import { Faculty, Slot } from "../../shared/interfaces";
 import { IRootStore } from "./Root.store";
 
 export type tokenType = string | null;

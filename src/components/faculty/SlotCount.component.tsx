@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
 import { Statistic, Grid, Header } from "semantic-ui-react";
-import { IRootStoreProps } from "../shared/interfaces";
+import { IRootStoreProps } from "../../shared/interfaces";
 
 interface ISlotCountProps extends IRootStoreProps {}
 

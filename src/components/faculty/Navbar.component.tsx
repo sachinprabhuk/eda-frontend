@@ -3,7 +3,7 @@ import { Menu, MenuItem, Image, Icon, Container } from "semantic-ui-react";
 
 import Logo from "../shared/assets/nitte-logo.png";
 import { inject } from "mobx-react";
-import { IRootStoreProps } from "../shared/interfaces";
+import { IRootStoreProps } from "../../shared/interfaces";
 
 export const Navbar = inject("rootStore")((props: IRootStoreProps) => {
   console.log("Render => navbar");

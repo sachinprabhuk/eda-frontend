@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Table, Label, Icon, Button } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
-import { ISlotStore } from "../../stores/Slot.store";
-import { Slot, IRootStoreProps } from "../../shared/interfaces";
-import { readableDate } from "../../shared/tools";
+import { ISlotStore } from "../../../stores/faculty/Slot.store";
+import { Slot, IRootStoreProps } from "../../../shared/interfaces";
+import { readableDate } from "../../../shared/tools";
 
 interface ISlotTableFooter extends IRootStoreProps {}
 

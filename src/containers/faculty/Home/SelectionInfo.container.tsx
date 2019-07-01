@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
-import { SlotCount } from "../../components/SlotCount.component";
-import { InfoAccordion } from "../../components/SelectionInfo/InfoAccordion.component";
+import { SlotCount } from "../../../components/faculty/SlotCount.component";
+import { InfoAccordion } from "../../../components/faculty/SelectionInfo/InfoAccordion.component";
 
 export function SelectionInfo() {
   return (

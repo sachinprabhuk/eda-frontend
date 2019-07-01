@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Table, Checkbox, CheckboxProps } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 
-import { Slot, IRootStoreProps } from "../../shared/interfaces";
-import { readableDate } from "../../shared/tools";
+import { Slot, IRootStoreProps } from "../../../shared/interfaces";
+import { readableDate } from "../../../shared/tools";
 
 interface ISlotTableRow extends IRootStoreProps {
   slot: Slot;

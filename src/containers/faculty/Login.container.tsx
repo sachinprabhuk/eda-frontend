@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Grid, GridColumn, Container } from "semantic-ui-react";
-import { LoginForm } from "../components/LoginForm.component";
-import { axios } from "../shared/axios";
+import { LoginForm } from "../../components/faculty/LoginForm.component";
+import { axios } from "../../shared/axios";
 import { observer, inject } from "mobx-react";
-import { IRootStoreProps } from "../shared/interfaces";
+import { IRootStoreProps } from "../../shared/interfaces";
 
 interface ILoginProps extends IRootStoreProps {}
 

@@ -1,11 +1,11 @@
 import React, { FormEvent, Component } from "react";
 import { Form, Button, Message, InputOnChangeData } from "semantic-ui-react";
 
-import { axios } from "../shared/axios";
+import { axios } from "../../shared/axios";
 import { observer, inject } from "mobx-react";
 import { observable, transaction } from "mobx";
 import { TextInput } from "./shared/TextInput.component";
-import { IRootStoreProps } from "../shared/interfaces";
+import { IRootStoreProps } from "../../shared/interfaces";
 
 interface ILoginFormProps extends IRootStoreProps {}
 

@@ -1,8 +1,8 @@
 import { observable, action, computed, flow } from "mobx";
-import { Slot } from "../shared/interfaces";
-import { axios } from "../shared/axios";
+import { Slot } from "../../shared/interfaces";
+import { axios } from "../../shared/axios";
 import { IRootStore } from "./Root.store";
-import { showToast } from "../shared/tools";
+import { showToast } from "../../shared/tools";
 
 export interface ISlotStore {
   rootStore: IRootStore;
