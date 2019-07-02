@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import { observer, inject } from "mobx-react";
 
-import { Home } from "./containers/faculty/Home";
-import { Login } from "./containers/faculty/Login.container";
 import { IRootStoreProps } from "./shared/interfaces";
 // @ts-ignore
 import { SemanticToastContainer } from "react-semantic-toasts";
+import { Switch, Route } from "react-router";
+import { FacultyIndex } from "./containers/faculty";
 
 interface IApp extends IRootStoreProps {}
 
-@inject("rootStore")
-@observer
 export class App extends Component<IApp> {
   render() {
     return (
       <>
-        {this.props.rootStore!.userStore.token ? <Home /> : <Login />}
+        <Switch>
+          <Route path="/" exact component={FacultyIndex} />
+          {/* <Route path="/admin/login" exact component={} /> */}
+        </Switch>
         <SemanticToastContainer position="top-right" />
       </>
     );

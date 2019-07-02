@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu, MenuItem, Image, Icon, Container } from "semantic-ui-react";
 
-import Logo from "../shared/assets/nitte-logo.png";
+import Logo from "../../shared/assets/nitte-logo.png";
 import { inject } from "mobx-react";
 import { IRootStoreProps } from "../../shared/interfaces";
 

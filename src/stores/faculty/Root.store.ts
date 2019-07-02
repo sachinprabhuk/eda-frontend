@@ -7,7 +7,7 @@ export interface IRootStore {
   activateSlotStore: () => void;
 }
 
-class RootStore {
+export class RootStore {
   userStore: IUserStore;
   slotStore: ISlotStore;
   constructor() {
@@ -21,5 +21,3 @@ class RootStore {
     this.slotStore = new SlotStore(this);
   };
 }
-
-export const RootStoreInstance = new RootStore();

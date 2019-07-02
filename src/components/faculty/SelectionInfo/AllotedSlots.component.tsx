@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Accordion, Icon, Segment, List } from "semantic-ui-react";
-import { IRootStoreProps } from "../../../shared/interfaces";
+import { IRootStoreProps, Slot } from "../../../shared/interfaces";
 import { observer, inject } from "mobx-react";
 import { NoSlots } from "./NoSlots.component";
 import { readableDate } from "../../../shared/tools";
@@ -16,7 +16,8 @@ interface IAllotedSlotsProps extends IRootStoreProps {
 @observer
 export class AllotedSlots extends Component<IAllotedSlotsProps> {
   render() {
-    const alloted = this.props.rootStore!.userStore.currentUser!.selections;
+    const alloted: Slot[] = this.props.rootStore!.userStore.currentUser!
+      .selections;
     const jsx = alloted.reduce(
       (acc: Array<Array<JSX.Element>>, curr, idx: number) => {
         if (curr.type === "morn")
