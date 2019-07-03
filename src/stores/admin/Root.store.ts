@@ -8,6 +8,7 @@ export class RootStore implements IRootStore {
   authStore: IAuthStore;
 
   constructor() {
+    console.log("%c Root store initialized", "color: green;font-size: 18px");
     this.authStore = new AuthStore();
   }
 }

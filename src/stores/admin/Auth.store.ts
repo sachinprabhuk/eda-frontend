@@ -1,4 +1,4 @@
-import { observable, flow } from "mobx";
+import { observable, flow, action } from "mobx";
 import { axios } from "../../shared/axios";
 
 //// <reference path="../../shared/Admin.namespace.ts" />
@@ -6,7 +6,9 @@ import { axios } from "../../shared/axios";
 export interface IAuthStore {
   token: string | null;
   checkingAuthStatus: boolean;
+
   checkAuth(): void;
+  setToken(token: string): void;
 }
 
 export class AuthStore implements IAuthStore {
@@ -14,16 +16,25 @@ export class AuthStore implements IAuthStore {
   @observable checkingAuthStatus: boolean = true;
 
   constructor() {
-    console.log("%c Auth store initialized", "color: green;font-size: 18");
+    console.log("%c Auth store initialized", "color: green;font-size: 18px");
     this.checkAuth();
   }
+
+  @action
+  setToken = (token: string | null) => {
+    console.log("Setting token to --> ", token);
+    if (token === null) localStorage.removeItem("eda-token");
+    else localStorage.setItem("eda-token", token);
+    this.token = token;
+  };
 
   checkAuth = flow(function*(this: AuthStore) {
     try {
       const { data } = yield axios.get("/auth/auth-status");
-      this.token = data;
+      this.token = localStorage.getItem("eda-token");
+      if (!data) throw new Error();
     } catch (e) {
-      this.token = null;
+      this.setToken(null);
     }
     this.checkingAuthStatus = false;
   });

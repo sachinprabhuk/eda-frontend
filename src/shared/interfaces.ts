@@ -2,6 +2,8 @@ import { ISlotStore } from "../stores/faculty/Slot.store";
 import { IUserStore } from "../stores/faculty/User.store";
 import { IRootStore } from "../stores/faculty/Root.store";
 
+import { IRootStore as IAdminRootStore } from "../stores/admin/Root.store";
+
 export interface Slot {
   id: string;
   date: Date;
@@ -31,4 +33,10 @@ export interface IUserStoreProps {
 
 export interface IRootStoreProps {
   rootStore?: IRootStore;
+}
+
+export namespace AdminInts {
+  export interface IRootStoreProps {
+    rootStore?: IAdminRootStore;
+  }
 }

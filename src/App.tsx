@@ -1,20 +1,23 @@
-import React, { Component } from "react";
-
-import { IRootStoreProps } from "./shared/interfaces";
+import React, { Component, lazy } from "react";
+import { Route, Switch } from "react-router-dom";
 // @ts-ignore
 import { SemanticToastContainer } from "react-semantic-toasts";
-import { Switch, Route } from "react-router";
+
+import { lazyLoaded } from "./components/utils/lazyLoaded.hoc";
 import { FacultyIndex } from "./containers/faculty";
+import { Page404 } from "./containers/admin/Page404.container";
 
-interface IApp extends IRootStoreProps {}
+const AdminInit = lazy(() => import("./containers/admin/AdminInit.container"));
 
-export class App extends Component<IApp> {
+export class App extends Component {
   render() {
+    console.log("Render => App");
     return (
       <>
         <Switch>
           <Route path="/" exact component={FacultyIndex} />
-          {/* <Route path="/admin/login" exact component={} /> */}
+          <Route path="/admin" component={lazyLoaded(AdminInit)} />
+          <Route path="*" component={Page404} />
         </Switch>
         <SemanticToastContainer position="top-right" />
       </>
