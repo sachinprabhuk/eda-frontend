@@ -10,8 +10,7 @@ body {
   --theme-secondary: #434b54;
   --theme-tertiary: #121212;
   --theme-variant-one: #44fdbc;
-  --theme-variant-two: #e64d43;
-  --theme-variant-three: #3700b3;
+  --theme-variant-two: #3700b3;
   --theme-light: #ffffff;
 }
 
@@ -33,6 +32,22 @@ body {
   height: 100vh;
 }
 
+.color.theme-one {
+  color: var(--theme-variant-one) !important;
+}
+.color.theme-two {
+  color: var(--theme-variant-two) !important;
+}
+.bg.theme-one {
+  background-color: var(--theme-variant-one) !important;
+}
+.bg.theme-two {
+  background-color: var(--theme-variant-two) !important;
+}
+.border.theme-one {
+  border: 2px solid var(--theme-variant-one) !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -46,11 +61,6 @@ body {
   background: #8a8a8a;
   border-radius: 2px;
 }
-
-/* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background: #b30000;
-} */
 
 #\#sidenav > div > a.item.active {
   color: var(--theme-variant-one) !important;
