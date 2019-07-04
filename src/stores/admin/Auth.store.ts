@@ -30,7 +30,9 @@ export class AuthStore implements IAuthStore {
 
   checkAuth = flow(function*(this: AuthStore) {
     try {
-      const { data } = yield axios.get("/auth/auth-status");
+      const { data } = yield axios.get("/auth/auth-status", {
+        params: { admin: true }
+      });
       this.token = localStorage.getItem("eda-token");
       if (!data) throw new Error();
     } catch (e) {

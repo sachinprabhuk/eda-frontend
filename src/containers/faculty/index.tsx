@@ -7,7 +7,7 @@ import { IRootStoreProps } from "../../shared/interfaces";
 
 const FacultyAuthCheck = inject("rootStore")(
   observer((props: IRootStoreProps) => {
-    console.log("Render => FacultyAuthCheck");
+    console.log("Render => FacultyAuthCheck", props.rootStore!.userStore.token);
     return props.rootStore!.userStore.token ? <Home /> : <Login />;
   })
 );

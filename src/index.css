@@ -6,6 +6,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --theme-primary: #1d262f;
+  --theme-secondary: #434b54;
+  --theme-tertiary: #121212;
+  --theme-variant-one: #44fdbc;
+  --theme-variant-two: #e64d43;
+  --theme-variant-three: #3700b3;
+  --theme-light: #ffffff;
 }
 
 .menu .right button.basic.ui.medium.AllotedSlotsButton {
@@ -24,4 +31,27 @@ body {
 .fullPage {
   width: 100%;
   height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8a8a8a;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+} */
+
+#\#sidenav > div > a.item.active {
+  color: var(--theme-variant-one) !important;
 }

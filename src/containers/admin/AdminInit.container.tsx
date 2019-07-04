@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Provider, observer } from "mobx-react";
-import { Switch, Route, RouteComponentProps } from "react-router-dom";
+import { Switch, Route, RouteComponentProps, Redirect } from "react-router-dom";
 import { IRootStore, RootStore } from "../../stores/admin/Root.store";
 import { AdminLogin } from "./Login.container";
 import { AdminHome } from "./Home.container";
@@ -31,9 +31,10 @@ export default class AdminInit extends Component<IAdminInit> {
         <>
           <Switch>
             <Route path="/admin/login" exact component={AdminLogin} />
-            <Route path="/admin/home" exact component={AdminHome} />
+            <Route path="/admin/home" component={AdminHome} />
             <Route path="/admin" exact component={AdminLogin} />
-            <Route to="/admin/*" component={Page404} />
+            <Route path="/404" exact component={Page404} />
+            <Redirect to="/404" />
           </Switch>
         </>
       </Provider>

@@ -15,7 +15,9 @@ export class Login extends Component<ILoginProps> {
 
     if (token) {
       try {
-        const { data: faculty } = await axios.get("/auth/auth-status");
+        const { data: faculty } = await axios.get("/auth/auth-status", {
+          params: { admin: false }
+        });
         this.props.rootStore!.userStore.login(token, faculty);
       } catch (e) {
         localStorage.removeItem("token");
