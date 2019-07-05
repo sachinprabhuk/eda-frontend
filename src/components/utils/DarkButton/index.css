@@ -1,0 +1,23 @@
+.dark-button {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 10px 24px;
+  color: var(--theme-variant-one);
+  border: none;
+  font-size: 15px;
+  border-radius: 4px;
+  display: grid;
+  justify-content: center;
+  transition: background-color 0.02s ease-in-out;
+}
+.dark-button.fluid {
+  width: 100%;
+  display: block;
+}
+
+.dark-button:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
+.dark-button:disabled {
+  opacity: 0.5;
+}

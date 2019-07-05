@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import {
-  Header,
-  Button,
-  FormProps,
-  Grid,
-  Input,
-  Form
-} from "semantic-ui-react";
+import { Header, FormProps, Grid } from "semantic-ui-react";
 import { VForm, VField } from "../../../shared/VirtualForm";
 import { AutoForm } from "../../utils/Form.component";
 import { axios } from "../../../shared/axios";
-import { observable, action } from "mobx";
+import { observable } from "mobx";
 import { observer } from "mobx-react";
+// @ts-ignore
+import { withToastManager } from "react-toast-notifications";
+
+import { FileUpload, FileUploadResp } from "../FileUpload.component";
+import { DarkButton } from "../../utils/DarkButton";
 
 @observer
-export class AddFaculty extends Component {
+class AddFaculty_ extends Component<any> {
   form: VForm;
   @observable file = null;
+  @observable loading = false;
 
   constructor(props: any) {
     super(props);
@@ -28,24 +27,28 @@ export class AddFaculty extends Component {
           .required()
           .type("text")
           .name("id")
+          .initValue("6666")
       )
       .addField(
         new VField()
           .label("Name")
           .required()
           .type("text")
+          .initValue("some name")
       )
       .addField(
         new VField()
           .label("Branch")
           .required()
           .type("text")
+          .initValue("CSE")
       )
       .addField(
         new VField()
           .label("Email")
           .required()
           .type("email")
+          .initValue("6666@gmail.com")
       )
       .addField(
         new VField()
@@ -53,28 +56,37 @@ export class AddFaculty extends Component {
           .required()
           .type("number")
           .name("contact")
+          .initValue("121212121")
       )
       .addField(
         new VField()
           .label("Designation")
           .required()
           .type("number")
+          .initValue("1")
       );
   }
   submitHandler = async (e: any, data: FormProps) => {
     try {
-      const { data } = await axios.post("/admin/faculty", {
+      await axios.post("/admin/faculty", {
         faculty: this.form.getData()
       });
-      console.log(data);
+      this.props.toastManager.add("Saved successfully...", {
+        appearance: "success"
+      });
     } catch (e) {
-      console.log(e);
+      const msg =
+        e && e.response
+          ? e.response.data.message
+          : "Error while adding faculty!!";
+
+      this.props.toastManager.add(msg, {
+        appearance: "error"
+      });
     }
   };
 
-  handleFileChange = action((e: any) => {
-    this.file = e.target.files[0];
-  });
+  handleFileSubmit = ({ error, msg }: FileUploadResp) => {};
 
   render() {
     return (
@@ -88,23 +100,14 @@ export class AddFaculty extends Component {
               <AutoForm
                 onSubmit={this.submitHandler}
                 formData={this.form}
-                submitButton={() => <Button inverted>Add user</Button>}
+                submitButton={() => <DarkButton>Submit</DarkButton>}
               />
             </Grid.Column>
             <Grid.Column width="6" floated="right">
-              <Form inverted>
-                <Form.Field>
-                  <label htmlFor="file">Upload excel file here(.xlsx)</label>
-                  <Input
-                    type="file"
-                    name="file"
-                    onChange={this.handleFileChange}
-                  />
-                </Form.Field>
-                <Button type="submit" inverted disabled={this.file === null}>
-                  Submit file
-                </Button>
-              </Form>
+              <FileUpload
+                uploadURL="/admin/faculties"
+                onSubmit={this.handleFileSubmit}
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -116,3 +119,5 @@ export class AddFaculty extends Component {
     delete this.form;
   }
 }
+
+export const AddFaculty = withToastManager(AddFaculty_);
