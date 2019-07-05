@@ -1,0 +1,61 @@
+body {
+  background-color: #121212;
+  --theme-op-one: #64ffda;
+  --theme-op-two: #3d5afe;
+  --theme-op-three: #ff80ab;
+  --theme-op-four: #448aff;
+  --theme-op-five: #526cf9;
+  --theme-op-six: #44fdbc;
+}
+
+.dark-form-element {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 20px 4px 20px 0px;
+  /* 	font-family: 'Roboto', sans-serif; */
+  font-family: "Roboto Mono", monospace;
+  --selection-bg: #121212;
+  --selection-color: #fff;
+}
+
+.dark-form-element label {
+  font-size: 12px;
+  font-weight: 560;
+  display: block;
+}
+
+.dark-form-element input {
+  border: none;
+  padding: 9px 12px;
+  border-radius: 3px 3px 2px 2px;
+  font-size: 16px;
+  outline: none;
+  background-color: #424242;
+  caret-color: white;
+  color: white;
+  border-bottom: 1.4px solid #e0e0e0;
+  transition: border 0.3s ease;
+}
+
+.dark-form-element input.fluid {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  /* min-width: 150px; */
+}
+
+.dark-form-element input:focus {
+  border-bottom: 1.4px solid var(--theme-op-six);
+}
+
+.dark-form-element input::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+}
+.dark-form-element input::-moz-selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+}
+.dark-form-element input::-o-selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+}

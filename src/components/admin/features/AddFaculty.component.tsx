@@ -1,21 +1,24 @@
 import React, { Component } from "react";
-import { Header, FormProps, Grid } from "semantic-ui-react";
+import { Header, Grid } from "semantic-ui-react";
 import { VForm, VField } from "../../../shared/VirtualForm";
 import { AutoForm } from "../../utils/Form.component";
 import { axios } from "../../../shared/axios";
-import { observable } from "mobx";
+import { observable, runInAction } from "mobx";
 import { observer } from "mobx-react";
-// @ts-ignore
-import { withToastManager } from "react-toast-notifications";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { FileUpload, FileUploadResp } from "../FileUpload.component";
+import {
+  FileUpload,
+  FileUploadResp
+} from "../../utils/DarkInput/FileUpload.component";
 import { DarkButton } from "../../utils/DarkButton";
 
 @observer
-class AddFaculty_ extends Component<any> {
+export class AddFaculty extends Component<any> {
   form: VForm;
   @observable file = null;
-  @observable loading = false;
+  @observable submitting = false;
 
   constructor(props: any) {
     super(props);
@@ -66,27 +69,29 @@ class AddFaculty_ extends Component<any> {
           .initValue("1")
       );
   }
-  submitHandler = async (e: any, data: FormProps) => {
+
+  submitHandler = async (e: any) => {
+    e.preventDefault();
+    runInAction(() => (this.submitting = true));
     try {
       await axios.post("/admin/faculty", {
         faculty: this.form.getData()
       });
-      this.props.toastManager.add("Saved successfully...", {
-        appearance: "success"
-      });
+      toast(<h3>{"Faculty added successfully"}</h3>);
     } catch (e) {
       const msg =
         e && e.response
           ? e.response.data.message
           : "Error while adding faculty!!";
-
-      this.props.toastManager.add(msg, {
-        appearance: "error"
-      });
+      toast(<h3>{msg}</h3>);
     }
+    runInAction(() => (this.submitting = false));
   };
 
-  handleFileSubmit = ({ error, msg }: FileUploadResp) => {};
+  handleFileSubmit = ({ error, msg }: FileUploadResp) => {
+    console.log(error);
+    toast(msg);
+  };
 
   render() {
     return (
@@ -100,13 +105,23 @@ class AddFaculty_ extends Component<any> {
               <AutoForm
                 onSubmit={this.submitHandler}
                 formData={this.form}
-                submitButton={() => <DarkButton>Submit</DarkButton>}
+                submitting={this.submitting}
+                submitButton={loading => (
+                  <DarkButton
+                    type="submit"
+                    loading={loading}
+                    disabled={loading}
+                  >
+                    Submit
+                  </DarkButton>
+                )}
               />
             </Grid.Column>
-            <Grid.Column width="6" floated="right">
+            <Grid.Column width="1" floated="right" />
+            <Grid.Column width="6" floated="left">
               <FileUpload
                 uploadURL="/admin/faculties"
-                onSubmit={this.handleFileSubmit}
+                onFinish={this.handleFileSubmit}
               />
             </Grid.Column>
           </Grid.Row>
@@ -119,5 +134,3 @@ class AddFaculty_ extends Component<any> {
     delete this.form;
   }
 }
-
-export const AddFaculty = withToastManager(AddFaculty_);
