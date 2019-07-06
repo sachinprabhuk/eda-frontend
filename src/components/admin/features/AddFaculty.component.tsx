@@ -3,7 +3,7 @@ import { Header, Grid } from "semantic-ui-react";
 import { VForm, VField } from "../../../shared/VirtualForm";
 import { AutoForm } from "../../utils/Form.component";
 import { axios } from "../../../shared/axios";
-import { observable, runInAction } from "mobx";
+import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +18,6 @@ import { DarkButton } from "../../utils/DarkButton";
 export class AddFaculty extends Component<any> {
   form: VForm;
   @observable file = null;
-  @observable submitting = false;
 
   constructor(props: any) {
     super(props);
@@ -72,7 +71,6 @@ export class AddFaculty extends Component<any> {
 
   submitHandler = async (e: any) => {
     e.preventDefault();
-    runInAction(() => (this.submitting = true));
     try {
       await axios.post("/admin/faculty", {
         faculty: this.form.getData()
@@ -85,12 +83,11 @@ export class AddFaculty extends Component<any> {
           : "Error while adding faculty!!";
       toast(<h3>{msg}</h3>);
     }
-    runInAction(() => (this.submitting = false));
   };
 
-  handleFileSubmit = ({ error, msg }: FileUploadResp) => {
+  handleFileSubmitFinish = ({ error, msg }: FileUploadResp) => {
     console.log(error);
-    toast(msg);
+    toast(<h3>{msg}</h3>);
   };
 
   render() {
@@ -105,7 +102,6 @@ export class AddFaculty extends Component<any> {
               <AutoForm
                 onSubmit={this.submitHandler}
                 formData={this.form}
-                submitting={this.submitting}
                 submitButton={loading => (
                   <DarkButton
                     type="submit"
@@ -120,8 +116,9 @@ export class AddFaculty extends Component<any> {
             <Grid.Column width="1" floated="right" />
             <Grid.Column width="6" floated="left">
               <FileUpload
+                errorMsg="Error while adding facultiy detail to db!"
                 uploadURL="/admin/faculties"
-                onFinish={this.handleFileSubmit}
+                onFinish={this.handleFileSubmitFinish}
               />
             </Grid.Column>
           </Grid.Row>

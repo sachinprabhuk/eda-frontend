@@ -31,7 +31,8 @@ body {
   outline: none;
   background-color: #424242;
   caret-color: white;
-  color: white;
+  /* color: white; */
+  color: #cfcfcf;
   border-bottom: 1.4px solid #e0e0e0;
   transition: border 0.3s ease;
 }

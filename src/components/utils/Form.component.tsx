@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { VForm, VField } from "../../shared/VirtualForm";
 import { DarkInput } from "./DarkInput";
 import { observer } from "mobx-react";
+import { observable, runInAction } from "mobx";
 
 // interface IInputField {
 //   formField: VField;
@@ -35,21 +36,28 @@ import { observer } from "mobx-react";
 
 interface IReactForm {
   formData: VForm;
-  submitting: boolean;
   onSubmit: (e: any) => void;
   submitButton: (loading: boolean) => JSX.Element;
 }
 
 @observer
 export class AutoForm extends Component<IReactForm> {
+  @observable submitting = false;
+
+  onSubmit = async (e: any) => {
+    runInAction(() => (this.submitting = true));
+    await this.props.onSubmit(e);
+    runInAction(() => (this.submitting = false));
+  };
+
   render() {
     console.log("Render => Form");
     return (
-      <form onSubmit={this.props.onSubmit}>
+      <form onSubmit={this.onSubmit}>
         {this.props.formData.form.map((el: VField, idx) => {
           return <DarkInput formField={el} fluid key={idx} />;
         })}
-        {this.props.submitButton(this.props.submitting)}
+        {this.props.submitButton(this.submitting)}
       </form>
     );
   }

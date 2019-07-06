@@ -4,16 +4,16 @@ import { VField } from "../../../shared/VirtualForm";
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
 
-interface IDarkInput {
+interface IProps {
   fluid?: boolean;
   autofocus?: boolean;
   formField: VField;
 }
 
 @observer
-export class DarkInput extends Component<IDarkInput> {
+export class DarkInput extends Component<IProps> {
   classList: string;
-  constructor(props: IDarkInput) {
+  constructor(props: IProps) {
     super(props);
     const { fluid } = props;
     const classList = [];

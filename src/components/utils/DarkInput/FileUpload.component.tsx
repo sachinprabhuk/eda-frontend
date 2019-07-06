@@ -7,12 +7,13 @@ import "./index.css";
 
 export interface FileUploadResp {
   error: boolean;
-  msg: string;
+  msg?: string;
 }
 
 interface IFileUpload {
   uploadURL: string;
   onFinish(data: FileUploadResp): void;
+  errorMsg: string;
 }
 
 @observer
@@ -33,11 +34,12 @@ export class FileUpload extends Component<IFileUpload> {
     try {
       await axios.post(this.props.uploadURL, formData);
       this.props.onFinish({
-        error: false,
-        msg: "Succesfully added faculties to db"
+        error: false
       });
     } catch (e) {
-      this.props.onFinish({ error: true, msg: "Error while adding faculties" });
+      const msg =
+        e && e.response ? e.response.data.message : this.props.errorMsg;
+      this.props.onFinish({ error: true, msg });
     }
     runInAction(() => {
       this.submitting = false;
