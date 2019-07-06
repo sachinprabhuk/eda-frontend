@@ -75,19 +75,19 @@ export class AddFaculty extends Component<any> {
       await axios.post("/admin/faculty", {
         faculty: this.form.getData()
       });
-      toast(<h3>{"Faculty added successfully"}</h3>);
+      toast("Faculty added successfully");
     } catch (e) {
       const msg =
         e && e.response
           ? e.response.data.message
           : "Error while adding faculty!!";
-      toast(<h3>{msg}</h3>);
+      toast.error(msg);
     }
   };
 
   handleFileSubmitFinish = ({ error, msg }: FileUploadResp) => {
-    console.log(error);
-    toast(<h3>{msg}</h3>);
+    if (error) toast.error({ msg });
+    else toast("Faculties added to db successfully");
   };
 
   render() {

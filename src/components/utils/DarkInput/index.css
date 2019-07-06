@@ -27,12 +27,12 @@ body {
   border: none;
   padding: 9px 12px;
   border-radius: 3px 3px 2px 2px;
-  font-size: 16px;
+  font-size: 14px;
   outline: none;
   background-color: #424242;
   caret-color: white;
   /* color: white; */
-  color: #cfcfcf;
+  color: rgba(255, 255, 255, 0.85);
   border-bottom: 1.4px solid #e0e0e0;
   transition: border 0.3s ease;
 }
