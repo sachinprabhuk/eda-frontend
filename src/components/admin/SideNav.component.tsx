@@ -21,7 +21,7 @@ export class SideNav extends Component {
           borderless
           secondary
           inverted
-          size="huge"
+          size="large"
           style={{ margin: "0px" }}
         >
           <div style={{ textAlign: "center" }}>

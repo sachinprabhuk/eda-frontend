@@ -12,15 +12,8 @@ interface IProps {
 
 @observer
 export class DarkInput extends Component<IProps> {
-  classList: string;
   constructor(props: IProps) {
     super(props);
-    const { fluid } = props;
-    const classList = [];
-    if (fluid) classList.push("fluid");
-    // other classes if needed.....
-
-    this.classList = classList.join(" ");
   }
   @observable value: string = this.props.formField.valueProp;
 
@@ -37,6 +30,9 @@ export class DarkInput extends Component<IProps> {
 
   render() {
     console.log("Render => Dark input");
+    const classList = ["dark-input"];
+    if (this.props.fluid) classList.push("fluid");
+
     return (
       <>
         <div className="dark-form-element">
@@ -46,7 +42,7 @@ export class DarkInput extends Component<IProps> {
             required={this.props.formField.requiredProp}
             onChange={this.handleChange}
             value={this.value}
-            className={this.classList}
+            className={classList.join(" ")}
             ref={this.input}
           />
         </div>

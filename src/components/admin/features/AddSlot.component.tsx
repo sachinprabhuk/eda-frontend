@@ -11,6 +11,7 @@ import "../../utils/DarkInput/index.css";
 import { DarkButton } from "../../utils/DarkButton";
 import { axios } from "../../../shared/axios";
 import { toast } from "react-toastify";
+import { DarkDropdown, IDrowdownoption } from "../../utils/DarkDropdown";
 
 @observer
 export class AddSlot extends Component {
@@ -18,14 +19,18 @@ export class AddSlot extends Component {
   @observable date: Date = new Date();
   @observable type: string | null = null;
   @observable submittingForm = false;
+  dropDownOptions: IDrowdownoption[] = [
+    { value: "aft", label: "Afternoon" },
+    { value: "morn", label: "Morning" }
+  ];
 
   updateSlotCount = (e: any) => (this.slotCount = e.target.value);
   updateDate = (e: any) => {
     console.log(e.target.value);
     this.date = new Date(e.target.value);
   };
-  updateType = (e: any, { value }: DropdownProps) => {
-    this.type = value as string;
+  updateType = (type: "aft" | "morn") => {
+    this.type = type;
   };
 
   handleFileSubmitFinish = ({ error, msg }: FileUploadResp) => {
@@ -36,10 +41,15 @@ export class AddSlot extends Component {
   onFormSubmit = async (e: any) => {
     e.preventDefault();
     runInAction(() => (this.submittingForm = true));
+    console.log({
+      date: this.date,
+      type: this.type,
+      total: this.slotCount
+    });
     try {
       await axios.post("/admin/slot", {
         slot: {
-          date: this.date.toISOString().slice(0, 10),
+          date: this.date,
           type: this.type,
           total: this.slotCount
         }
@@ -59,7 +69,7 @@ export class AddSlot extends Component {
     return (
       <div>
         <Header className="color theme-one" as="h1" style={{ fontWeight: 400 }}>
-          Faculty details
+          Slot details
         </Header>
         <Grid>
           <Grid.Row>
@@ -72,7 +82,7 @@ export class AddSlot extends Component {
                     onChange={this.updateDate}
                     value={this.date.toISOString().slice(0, 10)}
                     type="date"
-                    style={{ display: "block", width: "100%" }}
+                    className="dark-input fluid"
                   />
                 </div>
                 <div className="dark-form-element">
@@ -81,31 +91,19 @@ export class AddSlot extends Component {
                     type="number"
                     onChange={this.updateSlotCount}
                     value={this.slotCount}
-                    className="fluid"
+                    className="fluid dark-input"
                     required
                   />
                 </div>
 
                 <div className="dark-form-element">
-                  <label>Slot type</label>
-                  <Dropdown
-                    className="dark-dropdown"
-                    placeholder="slot type"
-                    fluid
-                    selection
+                  <DarkDropdown
+                    labelText="slot type"
                     onChange={this.updateType}
-                    options={[
-                      {
-                        key: 1,
-                        text: "Morning",
-                        value: "morn"
-                      },
-                      {
-                        key: 2,
-                        text: "Afternoon",
-                        value: "aft"
-                      }
-                    ]}
+                    fluid
+                    required
+                    placeholder="Slot type"
+                    options={this.dropDownOptions}
                   />
                 </div>
                 <DarkButton
