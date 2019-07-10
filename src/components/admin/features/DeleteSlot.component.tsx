@@ -28,6 +28,8 @@ interface ISlotInfo {
   total: number;
   remaining: number;
   selected: boolean;
+
+  index: number;
 }
 
 type filterType = "all" | "morn" | "aft";
@@ -38,7 +40,7 @@ const DTableRow = observer(function(
     onSelect: (e: any, data: CheckboxProps) => void;
   } & ISlotInfo
 ) {
-  console.log("Render => Row");
+  console.log("Render => Row", props.selected);
   return (
     <Table.Row>
       <Table.Cell>{props.type}</Table.Cell>
@@ -49,7 +51,7 @@ const DTableRow = observer(function(
         <Checkbox
           onChange={props.onSelect}
           value={props.index}
-          checked={props.selected}
+          checked={!!props.selected}
         />
       </Table.Cell>
     </Table.Row>
@@ -148,7 +150,10 @@ export class DeleteSlot extends Component {
   fetchAndSetSlots = flow(function*(this: DeleteSlot) {
     try {
       const { data } = yield axios.get("/admin/slots");
-      this.mobxState.slots = data;
+      this.mobxState.slots = data.map((el: any, index: number) => {
+        el.index = index;
+        return el;
+      });
     } catch (e) {
       const msg =
         e && e.response
@@ -165,14 +170,26 @@ export class DeleteSlot extends Component {
 
   onRowEvent = action((e: any, { checked, value: rowIndex }: CheckboxProps) => {
     this.mobxState.selectedCount += checked ? 1 : -1;
+    console.log(rowIndex);
     this.mobxState.slots[rowIndex as number].selected = checked as boolean;
   });
 
   handleAllSelect = action((e: any, { checked }: CheckboxProps) => {
-    this.mobxState.slots.forEach(slt => {
-      slt.selected = checked as boolean;
-    });
-    this.mobxState.selectedCount = checked ? this.mobxState.slots.length : 0;
+    if (this.mobxState.currentType === "all") {
+      this.mobxState.slots.forEach(slt => {
+        slt.selected = checked as boolean;
+      });
+      this.mobxState.selectedCount = checked ? this.mobxState.slots.length : 0;
+    } else {
+      let count = 0;
+      this.mobxState.slots.forEach(slt => {
+        if (slt.type === this.mobxState.currentType) {
+          slt.selected = checked as boolean;
+          ++count;
+        }
+      });
+      this.mobxState.selectedCount = checked ? count : 0;
+    }
   });
 
   handleDelete = flow(function*(this: DeleteSlot) {
@@ -189,9 +206,12 @@ export class DeleteSlot extends Component {
         acc.set(curr, curr);
         return acc;
       }, new Map());
-      this.mobxState.slots = this.mobxState.slots.filter(
-        fac => !map.has(fac.id)
-      );
+      this.mobxState.slots = this.mobxState.slots
+        .filter(slt => !map.has(slt.id))
+        .map((el, index) => {
+          el.index = index;
+          return el;
+        });
       this.mobxState.selectedCount = 0;
     } catch (e) {
       const msg =
@@ -246,7 +266,7 @@ export class DeleteSlot extends Component {
                     ? this.mobxState.slots.map((el: any, index: number) => (
                         <DTableRow
                           key={index}
-                          index={index}
+                          index={el.index}
                           {...el}
                           onSelect={this.onRowEvent}
                         />
@@ -259,7 +279,7 @@ export class DeleteSlot extends Component {
                         .map((el, index) => (
                           <DTableRow
                             key={index}
-                            index={index}
+                            index={el.index}
                             {...el}
                             onSelect={this.onRowEvent}
                           />

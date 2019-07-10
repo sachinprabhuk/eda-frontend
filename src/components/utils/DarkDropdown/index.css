@@ -17,7 +17,7 @@
 
 .dark-form-element div.dropdown {
   position: relative;
-  max-width: 120px;
+  min-width: 160px;
   font-family: "Roboto", sans-serif;
 }
 .dark-form-element div.dropdown.fluid {

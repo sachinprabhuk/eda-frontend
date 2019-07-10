@@ -29,7 +29,7 @@ export class DarkDropdown extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       active: false,
-      selected: null
+      selected: props.initSelected || null
     };
     this.hiddenInputRef = React.createRef<HTMLInputElement>();
   }
@@ -56,7 +56,7 @@ export class DarkDropdown extends React.Component<IProps, IState> {
     const optionsClasses = "options" + (active ? " active" : "");
     const ddClasses = ["dropdown"];
     if (this.props.fluid) ddClasses.push("fluid");
-    if (this.props.justArrow) ddClasses.push("justArrow");
+    if (!!this.props.justArrow) ddClasses.push("justArrow");
 
     const requiredMarkup = this.props.required ? (
       <input
@@ -95,7 +95,12 @@ export class DarkDropdown extends React.Component<IProps, IState> {
           <ul className={optionsClasses}>
             {this.props.options.map((option, idx) => {
               return (
-                <li tabIndex={0} onClick={this.updateSelected} value={idx}>
+                <li
+                  tabIndex={0}
+                  onClick={this.updateSelected}
+                  value={idx}
+                  key={idx}
+                >
                   {option.label}
                 </li>
               );

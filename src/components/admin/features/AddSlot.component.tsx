@@ -49,7 +49,7 @@ export class AddSlot extends Component {
     try {
       await axios.post("/admin/slot", {
         slot: {
-          date: this.date,
+          date: this.date.toISOString().slice(0, 10),
           type: this.type,
           total: this.slotCount
         }
