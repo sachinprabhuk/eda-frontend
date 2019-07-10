@@ -1,52 +1,52 @@
-import React, { Component, createRef } from "react";
+import React, { createRef, RefObject, PureComponent } from "react";
 import "./index.css";
-import { VField } from "../../../shared/VirtualForm";
-import { observable, action } from "mobx";
-import { observer } from "mobx-react";
 
 interface IProps {
-  fluid?: boolean;
   autofocus?: boolean;
-  formField: VField;
+  fluid?: boolean;
+  name?: string;
+  required?: boolean;
+  type?: "number" | "text";
+
+  value: string | number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  label: string;
 }
 
-@observer
-export class DarkInput extends Component<IProps> {
+export class DarkInput extends PureComponent<IProps> {
+  private inputRef: RefObject<HTMLInputElement>;
+
   constructor(props: IProps) {
     super(props);
+    this.inputRef = createRef<HTMLInputElement>();
   }
-  @observable value: string = this.props.formField.valueProp;
-
-  handleChange = action((e: any) => {
-    this.value = e.target.value;
-    this.props.formField.valueProp = e.target.value;
-  });
-
-  private input = createRef<HTMLInputElement>();
 
   componentDidMount() {
-    if (this.props.autofocus) this.input.current!.focus();
+    if (!!this.props.autofocus) this.inputRef.current!.focus();
   }
 
   render() {
-    console.log("Render => Dark input");
-    const classList = ["dark-input"];
-    if (this.props.fluid) classList.push("fluid");
+    console.log("Render => Input", this.props.name);
+    const { label, fluid, name, required, type } = this.props;
+    const inputProps = { type: "text" } as any;
+    if (name) inputProps["name"] = name;
+    if (required) inputProps["required"] = required;
+    if (type) inputProps["type"] = type;
 
+    const classList = ["text-input"];
+    if (fluid) classList.push("fluid");
     return (
-      <>
-        <div className="dark-form-element">
-          <label>{this.props.formField.labelProp}</label>
-          <input
-            type={this.props.formField.typeProp}
-            required={this.props.formField.requiredProp}
-            onChange={this.handleChange}
-            value={this.value}
-            className={classList.join(" ")}
-            ref={this.input}
-          />
-        </div>
-      </>
+      <div className="dark-input-element">
+        <label className="el-label">{label}</label>
+        <input
+          autoComplete="off"
+          onChange={this.props.onChange}
+          value={this.props.value}
+          {...inputProps}
+          className={classList.join(" ")}
+          ref={this.inputRef}
+        />
+      </div>
     );
   }
 }

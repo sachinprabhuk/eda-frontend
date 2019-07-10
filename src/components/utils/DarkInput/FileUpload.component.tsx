@@ -51,12 +51,12 @@ export class FileUpload extends Component<IFileUpload> {
   render() {
     return (
       <form onSubmit={this.submitHandler}>
-        <div className="dark-form-element">
-          <label>upload faculty file here(.xlsx)</label>
+        <div className="dark-input-element">
+          <label className="el-label">upload faculty file here(.xlsx)</label>
           <input
             type="file"
             onChange={this.handleFileChange}
-            className="fluid"
+            className="fluid text-input"
             ref={this.inputRef}
             required
           />

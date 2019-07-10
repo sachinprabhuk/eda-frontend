@@ -12,6 +12,12 @@ body {
   --theme-variant-one: #44fdbc;
   --theme-variant-two: #3700b3;
   --theme-light: #ffffff;
+
+  /* --form-element-bg: #424242; */
+  --form-element-bg: rgba(255, 255, 255, 0.15);
+  --form-element-color: rgba(255, 255, 255, 0.9);
+  --form-element-hover-bg: #474747;
+  --form-element-hover-color: grey;
 }
 
 .menu .right button.basic.ui.medium.AllotedSlotsButton {
@@ -64,29 +70,4 @@ body {
 
 #\#sidenav > div > a.item.active {
   color: var(--theme-variant-one) !important;
-}
-
-.dropdown.dark-dropdown {
-  font-size: 16px !important;
-  color: white !important;
-  background-color: #424242 !important;
-  outline: none !important;
-  border: none !important;
-}
-
-div.dropdown.dark-dropdown.active .text {
-  color: white !important;
-  background-color: #424242 !important;
-  outline: none !important;
-}
-
-div.dropdown.dark-dropdown.active .visible.menu {
-  color: white !important;
-  background-color: #424242 !important;
-  border: 2px solid #424242 !important;
-}
-
-div.dropdown.dark-dropdown.active .item.active {
-  color: white !important;
-  background-color: #565656 !important;
 }

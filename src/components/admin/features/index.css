@@ -1,0 +1,109 @@
+.dark-dropdown-element {
+  margin: 20px 4px 20px 0px;
+}
+
+.dark-dropdown-element label {
+  font-size: 12px;
+  font-weight: 560;
+  display: block;
+  color: var(--form-element-color);
+}
+
+.dark-dropdown-element div.dropdown {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  display: inline-block;
+  color: var(--form-element-color);
+}
+
+.dark-dropdown-element div.dropdown.fluid {
+  display: block;
+}
+
+.dark-dropdown-element div.select div.content {
+  margin-right: 10px;
+}
+
+.dark-dropdown-element div.select {
+  outline: none;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 3px 3px 2px 2px;
+  font-size: 14px;
+  background-color: var(--form-element-bg);
+  border-bottom: 1.4px solid #e0e0e0;
+  transition: border 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dark-dropdown-element div.select:hover {
+  background-color: var(--form-element-hover-bg);
+}
+
+.dark-dropdown-element div.select div.arrow {
+  font-size: 20px;
+}
+
+.dark-dropdown-element div.select:focus,
+.dark-dropdown-element div.select.active {
+  border-bottom: 1.4px solid var(--theme-variant-one);
+}
+
+.dark-dropdown-element div.select + ul.options {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  left: 0;
+  display: none;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 0px 0px 4px 4px;
+  overflow: hidden;
+}
+
+.dark-dropdown-element div.select + ul.options.active {
+  display: block;
+}
+
+.dark-dropdown-element div.select + ul.options li {
+  outline: none;
+  border: none;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: var(--form-element-bg);
+  cursor: pointer;
+}
+
+.dark-dropdown-element div.select + ul.options li:hover,
+.dark-dropdown-element div.select + ul.options li:focus {
+  background-color: var(--form-element-hover-bg);
+}
+
+.dark-dropdown-element div.dropdown.justArrow {
+  max-width: none;
+  display: inline-block;
+}
+
+.dark-dropdown-element div.dropdown.justArrow div.select {
+  padding: 0px;
+  border: none;
+}
+
+.dark-dropdown-element div.dropdown.justArrow div.select .arrow {
+  font-size: 24px;
+}
+
+.dark-dropdown-element input[type="text"].hidden-input {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  opacity: 0;
+  cursor: default;
+  width: 0px;
+  height: 0px;
+}

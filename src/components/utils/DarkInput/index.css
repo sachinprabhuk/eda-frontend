@@ -1,52 +1,35 @@
-.dark-form-element {
-  color: rgba(255, 255, 255, 0.9);
+.dark-input-element {
   margin: 20px 4px 20px 0px;
-  /* 	font-family: 'Roboto', sans-serif; */
-  font-family: "Roboto Mono", monospace;
-  --selection-bg: #121212;
-  --selection-color: #fff;
 }
 
-.dark-form-element label {
+.dark-input-element label.el-label {
   font-size: 12px;
   font-weight: 560;
   display: block;
+  color: var(--form-element-color);
 }
 
-.dark-form-element input.dark-input {
+.dark-input-element input.text-input {
   border: none;
-  padding: 9px 12px;
+  padding: 10px 12px;
   border-radius: 3px 3px 2px 2px;
-  font-size: 14px;
+  font-size: 16px;
   outline: none;
-  background-color: #424242;
-  caret-color: white;
-  /* color: white; */
-  color: rgba(255, 255, 255, 0.85);
+  background-color: var(--form-element-bg);
+  caret-color: var(--form-element-color);
+  color: var(--form-element-color);
   border-bottom: 1.4px solid #e0e0e0;
-  transition: border 0.3s ease;
+  transition: border 0.2s ease, background-color 0.2s ease;
 }
 
-.dark-form-element input.fluid.dark-input {
+.dark-input-element input.text-input.fluid {
   box-sizing: border-box;
   display: block;
   width: 100%;
-  /* min-width: 150px; */
+  min-width: 290px;
 }
 
-.dark-form-element input.dark-input:focus {
+.dark-input-element input.text-input:focus {
+  background-color: var(--form-element-hover-bg);
   border-bottom: 1.4px solid var(--theme-variant-one);
-}
-
-.dark-form-element input.dark-input::selection {
-  background-color: var(--selection-bg);
-  color: var(--selection-color);
-}
-.dark-form-element input.dark-input::-moz-selection {
-  background-color: var(--selection-bg);
-  color: var(--selection-color);
-}
-.dark-form-element input.dark-input::-o-selection {
-  background-color: var(--selection-bg);
-  color: var(--selection-color);
 }

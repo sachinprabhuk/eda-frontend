@@ -1,5 +1,5 @@
 .dark-button {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--form-element-bg);
   padding: 10px 24px;
   color: var(--theme-variant-one);
   border: none;
@@ -16,7 +16,7 @@
 }
 
 .dark-button:hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.24);
+  background-color: var(--form-element-hover-bg);
 }
 
 .dark-button:disabled {
