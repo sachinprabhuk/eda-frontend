@@ -1,4 +1,4 @@
-import React, { Component, RefObject } from "react";
+import React, { Component } from "react";
 
 export class Mail extends Component {
   render() {

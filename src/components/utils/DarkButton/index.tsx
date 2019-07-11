@@ -1,7 +1,7 @@
 import React, { MouseEvent } from "react";
 import { Loader } from "semantic-ui-react";
-import "./index.css";
 import { observer } from "mobx-react";
+import "./index.css";
 
 interface IDarkButton {
   children: string;
@@ -22,7 +22,7 @@ export const DarkButton = observer(
     return (
       <button className={classList.join(" ")} {...rest}>
         {loading ? (
-          <Loader size="small" inverted active inline="centered" />
+          <Loader size="tiny" inverted active inline="centered" />
         ) : (
           children
         )}

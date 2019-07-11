@@ -53,6 +53,7 @@
 }
 
 .dark-dropdown-element div.select + ul.options {
+  z-index: 99999999;
   position: absolute;
   top: 100%;
   width: 100%;

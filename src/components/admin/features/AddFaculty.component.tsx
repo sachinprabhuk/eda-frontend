@@ -1,5 +1,5 @@
-import React, { Component, FormEvent, ChangeEvent } from "react";
-import { Header, Grid, Form } from "semantic-ui-react";
+import React, { Component, ChangeEvent } from "react";
+import { Header, Grid } from "semantic-ui-react";
 import { axios } from "../../../shared/axios";
 import { observable, runInAction } from "mobx";
 import { observer } from "mobx-react";

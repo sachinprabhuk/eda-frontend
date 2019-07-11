@@ -101,6 +101,7 @@ export class AddSlot extends Component<any, IState> {
                   fluid
                 />
                 <DarkDropdown
+                  label="select type"
                   options={this.dropDownOptions}
                   value={this.state.type}
                   placeholder="Slot type"

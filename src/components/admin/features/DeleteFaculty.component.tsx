@@ -195,22 +195,22 @@ export class DeleteFaculty extends Component {
           Delete faculties
         </Header>
         <Grid>
-          <Grid.Row>
-            {this.mobxState.fetchingFaculties ? (
-              <div>
-                <Loader
-                  style={{ display: "block" }}
-                  size="large"
-                  inverted
-                  content="Loading...please wait"
-                  active
-                />
-              </div>
-            ) : this.mobxState.faculties.length === 0 ? (
+          {this.mobxState.fetchingFaculties ? (
+            <Loader
+              style={{ display: "block" }}
+              size="large"
+              inverted
+              content="Loading...please wait"
+              active
+            />
+          ) : this.mobxState.faculties.length === 0 ? (
+            <Grid.Row>
               <div style={{ textAlign: "center", width: "100%" }}>
                 <h3 style={{ color: "white" }}>No data to display!!</h3>
               </div>
-            ) : (
+            </Grid.Row>
+          ) : (
+            <Grid.Row>
               <Table inverted celled striped>
                 <DTableHeader
                   selectedCount={this.mobxState.selectedCount}
@@ -232,8 +232,9 @@ export class DeleteFaculty extends Component {
                   ))}
                 </Table.Body>
               </Table>
-            )}
-          </Grid.Row>
+            </Grid.Row>
+          )}
+          }
         </Grid>
       </>
     );

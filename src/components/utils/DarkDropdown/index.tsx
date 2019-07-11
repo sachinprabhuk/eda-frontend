@@ -1,4 +1,4 @@
-import React, { PureComponent, RefObject } from "react";
+import React, { PureComponent, RefObject, CSSProperties } from "react";
 import "./index.css";
 
 export interface ISelectOption {
@@ -10,7 +10,9 @@ interface IProps {
   value: ISelectOption | null;
   onChange: (index: number, item: ISelectOption) => void;
   options: ISelectOption[];
+  label: string;
 
+  style?: CSSProperties;
   required?: boolean;
   justArrow?: boolean;
   fluid?: boolean;
@@ -37,7 +39,8 @@ export class DarkDropdown extends PureComponent<IProps> {
     } = e;
     this.props.onChange(index, this.props.options[index]);
     this.setState({ active: false });
-    this.hiddenInputRef.current!.value = this.props.options[index].label;
+    if (this.props.required)
+      this.hiddenInputRef.current!.value = this.props.options[index].label;
   };
 
   render() {
@@ -64,11 +67,12 @@ export class DarkDropdown extends PureComponent<IProps> {
 
     return (
       <div className="dark-dropdown-element">
-        {this.props.justArrow ? null : <label>label</label>}
+        {this.props.justArrow ? null : <label>{this.props.label}</label>}
         <div className={ddClasses.join(" ")}>
           {requiredMarkup}
           <div
             className={selectClass.join(" ")}
+            style={{ ...this.props.style }}
             tabIndex={0}
             onClick={this.toggleActive}
           >
