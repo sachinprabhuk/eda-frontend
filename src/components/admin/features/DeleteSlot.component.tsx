@@ -13,7 +13,7 @@ import { observable, flow, action, computed } from "mobx";
 
 import { axios } from "../../../shared/axios";
 import { toast } from "react-toastify";
-import { DarkDropdown } from "../../utils/DarkDropdown";
+// import { DarkDropdown } from "../../utils/DarkDropdown";
 
 // "id": "2b477109-84f1-4a97-bf53-bfb37ebd4f83",
 // "type": "morn",
@@ -34,100 +34,100 @@ interface ISlotInfo {
 
 type filterType = "all" | "morn" | "aft";
 
-const DTableRow = observer(function(
-  props: {
-    index: number;
-    onSelect: (e: any, data: CheckboxProps) => void;
-  } & ISlotInfo
-) {
-  console.log("Render => Row", props.selected);
-  return (
-    <Table.Row>
-      <Table.Cell>{props.type}</Table.Cell>
-      <Table.Cell>{props.date}</Table.Cell>
-      <Table.Cell>{props.total}</Table.Cell>
-      <Table.Cell>{props.remaining}</Table.Cell>
-      <Table.Cell>
-        <Checkbox
-          onChange={props.onSelect}
-          value={props.index}
-          checked={!!props.selected}
-        />
-      </Table.Cell>
-    </Table.Row>
-  );
-});
+// const DTableRow = observer(function(
+//   props: {
+//     index: number;
+//     onSelect: (e: any, data: CheckboxProps) => void;
+//   } & ISlotInfo
+// ) {
+//   console.log("Render => Row", props.selected);
+//   return (
+//     <Table.Row>
+//       <Table.Cell>{props.type}</Table.Cell>
+//       <Table.Cell>{props.date}</Table.Cell>
+//       <Table.Cell>{props.total}</Table.Cell>
+//       <Table.Cell>{props.remaining}</Table.Cell>
+//       <Table.Cell>
+//         <Checkbox
+//           onChange={props.onSelect}
+//           value={props.index}
+//           checked={!!props.selected}
+//         />
+//       </Table.Cell>
+//     </Table.Row>
+//   );
+// });
 
-const filterOptions = [
-  { value: "all", label: "All" },
-  { value: "morn", label: "Morning" },
-  { value: "aft", label: "Afternoon" }
-];
+// const filterOptions = [
+//   { value: "all", label: "All" },
+//   { value: "morn", label: "Morning" },
+//   { value: "aft", label: "Afternoon" }
+// ];
 
-const DTableHeader = observer(
-  (props: {
-    selectedCount: number;
-    allSelected: boolean;
-    filter: filterType;
-    onSelectAll: (e: any, data: CheckboxProps) => void;
-    onDeleteClick: (e: any) => void;
-    onFilterChange: (e: any) => void;
-  }) => {
-    console.log("Render => Header");
-    return (
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell colSpan="3" verticalAlign="middle">
-            <span>
-              You have selected{" "}
-              <span className="color theme-one" style={{ fontSize: "20px" }}>
-                {props.selectedCount}
-              </span>{" "}
-              slots
-            </span>
-          </Table.HeaderCell>
-          <Table.HeaderCell colSpan="2">
-            <Button
-              color="youtube"
-              floated="right"
-              size="small"
-              onClick={props.onDeleteClick}
-              disabled={props.selectedCount === 0}
-            >
-              Delete selected
-            </Button>
-          </Table.HeaderCell>
-        </Table.Row>
-        <Table.Row>
-          <Table.HeaderCell
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center"
-            }}
-          >
-            Slot type
-            <DarkDropdown
-              options={filterOptions}
-              initSelected={filterOptions[0]}
-              onChange={props.onFilterChange}
-              justArrow
-            />
-          </Table.HeaderCell>
-          <Table.HeaderCell>Date</Table.HeaderCell>
-          <Table.HeaderCell>Total</Table.HeaderCell>
-          <Table.HeaderCell>Available</Table.HeaderCell>
-          <Table.HeaderCell>
-            <Checkbox
-              checked={props.allSelected}
-              onChange={props.onSelectAll}
-            />
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-    );
-  }
-);
+// const DTableHeader = observer(
+//   (props: {
+//     selectedCount: number;
+//     allSelected: boolean;
+//     filter: filterType;
+//     onSelectAll: (e: any, data: CheckboxProps) => void;
+//     onDeleteClick: (e: any) => void;
+//     onFilterChange: (e: any) => void;
+//   }) => {
+//     console.log("Render => Header");
+//     return (
+//       <Table.Header>
+//         <Table.Row>
+//           <Table.HeaderCell colSpan="3" verticalAlign="middle">
+//             <span>
+//               You have selected{" "}
+//               <span className="color theme-one" style={{ fontSize: "20px" }}>
+//                 {props.selectedCount}
+//               </span>{" "}
+//               slots
+//             </span>
+//           </Table.HeaderCell>
+//           <Table.HeaderCell colSpan="2">
+//             <Button
+//               color="youtube"
+//               floated="right"
+//               size="small"
+//               onClick={props.onDeleteClick}
+//               disabled={props.selectedCount === 0}
+//             >
+//               Delete selected
+//             </Button>
+//           </Table.HeaderCell>
+//         </Table.Row>
+//         <Table.Row>
+//           <Table.HeaderCell
+//             style={{
+//               display: "flex",
+//               justifyContent: "space-between",
+//               alignItems: "center"
+//             }}
+//           >
+//             Slot type
+//             <DarkDropdown
+//               options={filterOptions}
+//               initSelected={filterOptions[0]}
+//               onChange={props.onFilterChange}
+//               justArrow
+//             />
+//           </Table.HeaderCell>
+//           <Table.HeaderCell>Date</Table.HeaderCell>
+//           <Table.HeaderCell>Total</Table.HeaderCell>
+//           <Table.HeaderCell>Available</Table.HeaderCell>
+//           <Table.HeaderCell>
+//             <Checkbox
+//               checked={props.allSelected}
+//               onChange={props.onSelectAll}
+//             />
+//           </Table.HeaderCell>
+//         </Table.Row>
+//       </Table.Header>
+//     );
+//   }
+// );
 
 @observer
 export class DeleteSlot extends Component {
@@ -233,7 +233,7 @@ export class DeleteSlot extends Component {
         <Header className="color theme-one" as="h1" style={{ fontWeight: 400 }}>
           Delete slots
         </Header>
-        <Grid>
+        {/* <Grid>
           <Grid.Row>
             {this.mobxState.fetchingSlots ? (
               <div style={{ display: "block", width: "100%" }}>
@@ -288,7 +288,7 @@ export class DeleteSlot extends Component {
               </Table>
             )}
           </Grid.Row>
-        </Grid>
+        </Grid> */}
       </>
     );
   }

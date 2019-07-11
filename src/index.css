@@ -14,9 +14,9 @@ body {
   --theme-light: #ffffff;
 
   /* --form-element-bg: #424242; */
-  --form-element-bg: rgba(255, 255, 255, 0.15);
-  --form-element-color: rgba(255, 255, 255, 0.9);
-  --form-element-hover-bg: #474747;
+  --form-element-bg: #424242;
+  --form-element-color: white;
+  --form-element-hover-bg: #525252;
   --form-element-hover-color: grey;
 }
 

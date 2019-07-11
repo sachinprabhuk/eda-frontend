@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, Grid, Dropdown, DropdownProps } from "semantic-ui-react";
+import { Header, Grid } from "semantic-ui-react";
 import { observable, runInAction } from "mobx";
 import { observer } from "mobx-react";
 
@@ -11,26 +11,36 @@ import "../../utils/DarkInput/index.css";
 import { DarkButton } from "../../utils/DarkButton";
 import { axios } from "../../../shared/axios";
 import { toast } from "react-toastify";
-import { DarkDropdown, IDrowdownoption } from "../../utils/DarkDropdown";
+import { DarkDropdown, ISelectOption } from "../../utils/DarkDropdown";
+import { DarkInput } from "../../utils/DarkInput";
 
+interface IState {
+  slotCount: number;
+  date: string;
+  type: ISelectOption | null;
+}
 @observer
-export class AddSlot extends Component {
-  @observable slotCount: number = 0;
-  @observable date: Date = new Date();
-  @observable type: string | null = null;
+export class AddSlot extends Component<any, IState> {
+  state = {
+    slotCount: 0,
+    date: new Date().toISOString().slice(0, 10),
+    type: null
+  };
   @observable submittingForm = false;
-  dropDownOptions: IDrowdownoption[] = [
+  dropDownOptions: ISelectOption[] = [
     { value: "aft", label: "Afternoon" },
     { value: "morn", label: "Morning" }
   ];
 
-  updateSlotCount = (e: any) => (this.slotCount = e.target.value);
-  updateDate = (e: any) => {
-    console.log(e.target.value);
-    this.date = new Date(e.target.value);
+  updateSlotInfo = (e: any) => {
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value
+    });
   };
-  updateType = (type: "aft" | "morn") => {
-    this.type = type;
+
+  updateType = (index: number, selected: ISelectOption) => {
+    this.setState({ ...this.state, type: selected });
   };
 
   handleFileSubmitFinish = ({ error, msg }: FileUploadResp) => {
@@ -41,17 +51,12 @@ export class AddSlot extends Component {
   onFormSubmit = async (e: any) => {
     e.preventDefault();
     runInAction(() => (this.submittingForm = true));
-    console.log({
-      date: this.date,
-      type: this.type,
-      total: this.slotCount
-    });
     try {
       await axios.post("/admin/slot", {
         slot: {
-          date: this.date.toISOString().slice(0, 10),
-          type: this.type,
-          total: this.slotCount
+          date: this.state.date,
+          type: (this.state.type! as ISelectOption).value,
+          total: this.state.slotCount
         }
       });
       toast("Slot added successfully!");
@@ -75,37 +80,34 @@ export class AddSlot extends Component {
           <Grid.Row>
             <Grid.Column width="7">
               <form onSubmit={this.onFormSubmit}>
-                <div className="dark-form-element">
-                  <label>Date</label>
+                <div className="dark-input-element">
+                  <label className="el-label">Date</label>
                   <input
-                    name="slot-date"
-                    onChange={this.updateDate}
-                    value={this.date.toISOString().slice(0, 10)}
+                    className="text-input fluid"
+                    name="date"
+                    onChange={this.updateSlotInfo}
+                    value={this.state.date}
                     type="date"
-                    className="dark-input fluid"
-                  />
-                </div>
-                <div className="dark-form-element">
-                  <label>Slot count</label>
-                  <input
-                    type="number"
-                    onChange={this.updateSlotCount}
-                    value={this.slotCount}
-                    className="fluid dark-input"
                     required
                   />
                 </div>
-
-                <div className="dark-form-element">
-                  <DarkDropdown
-                    labelText="slot type"
-                    onChange={this.updateType}
-                    fluid
-                    required
-                    placeholder="Slot type"
-                    options={this.dropDownOptions}
-                  />
-                </div>
+                <DarkInput
+                  name="slotCount"
+                  value={this.state.slotCount}
+                  onChange={this.updateSlotInfo}
+                  label="slot count"
+                  required
+                  type="number"
+                  fluid
+                />
+                <DarkDropdown
+                  options={this.dropDownOptions}
+                  value={this.state.type}
+                  placeholder="Slot type"
+                  required
+                  fluid
+                  onChange={this.updateType}
+                />
                 <DarkButton
                   type="submit"
                   loading={this.submittingForm}

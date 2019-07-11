@@ -1,58 +1,58 @@
-.dark-form-element {
-  color: rgba(255, 255, 255, 0.9);
+.dark-dropdown-element {
   margin: 20px 4px 20px 0px;
-  /* 	font-family: 'Roboto', sans-serif; */
-  font-family: "Roboto Mono", monospace;
-  --selection-bg: #121212;
-  --selection-color: #fff;
 }
 
-.dark-form-element label {
+.dark-dropdown-element label {
   font-size: 12px;
   font-weight: 560;
   display: block;
+  color: var(--form-element-color);
 }
 
-/* drop down */
-
-.dark-form-element div.dropdown {
+.dark-dropdown-element div.dropdown {
   position: relative;
-  min-width: 160px;
   font-family: "Roboto", sans-serif;
-}
-.dark-form-element div.dropdown.fluid {
-  max-width: none;
+  display: inline-block;
+  color: var(--form-element-color);
 }
 
-.dark-form-element div.select {
+.dark-dropdown-element div.dropdown.fluid {
+  display: block;
+}
+
+.dark-dropdown-element div.select div.content {
+  margin-right: 10px;
+}
+
+.dark-dropdown-element div.select {
   outline: none;
   border: none;
-  padding: 8px 12px;
   border-radius: 3px 3px 2px 2px;
   font-size: 14px;
-  background-color: #424242;
+  background-color: var(--form-element-bg);
   border-bottom: 1.4px solid #e0e0e0;
   transition: border 0.3s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-}
-.dark-form-element div.select:hover {
-  background-color: #616161;
+  padding: 10px 12px;
 }
 
-.dark-form-element div.select div.arrow {
+.dark-dropdown-element div.select:hover {
+  background-color: var(--form-element-hover-bg);
+}
+
+.dark-dropdown-element div.select div.arrow {
   font-size: 20px;
 }
 
-.dark-form-element div.select:focus,
-.dark-form-element div.select.active {
+.dark-dropdown-element div.select:focus,
+.dark-dropdown-element div.select.active {
   border-bottom: 1.4px solid var(--theme-variant-one);
 }
 
-.dark-form-element div.select + ul.options {
-  min-width: 120px;
+.dark-dropdown-element div.select + ul.options {
   position: absolute;
   top: 100%;
   width: 100%;
@@ -65,41 +65,43 @@
   overflow: hidden;
 }
 
-.dark-form-element div.select + ul.options.active {
+.dark-dropdown-element div.select + ul.options.active {
   display: block;
 }
 
-.dark-form-element div.select + ul.options li {
+.dark-dropdown-element div.select + ul.options li {
   outline: none;
   border: none;
   padding: 8px 12px;
   box-sizing: border-box;
   font-size: 14px;
-  background-color: #424242;
+  background-color: var(--form-element-bg);
   cursor: pointer;
 }
 
-.dark-form-element div.select + ul.options li:hover,
-.dark-form-element div.select + ul.options li:focus {
-  background-color: #616161;
+.dark-dropdown-element div.select + ul.options li:hover,
+.dark-dropdown-element div.select + ul.options li:focus {
+  background-color: var(--form-element-hover-bg);
 }
 
-.dark-form-element div.dropdown.justArrow {
+.dark-dropdown-element div.dropdown.justArrow {
   max-width: none;
   display: inline-block;
 }
-.dark-form-element div.dropdown.justArrow div.select {
+
+.dark-dropdown-element div.dropdown.justArrow div.select {
   padding: 0px;
   border: none;
 }
-.dark-form-element div.dropdown.justArrow div.select .arrow {
-  font-size: 20px;
+
+.dark-dropdown-element div.dropdown.justArrow div.select .arrow {
+  font-size: 24px;
 }
 
-.dark-form-element input[type="text"].ddd-hidden {
+.dark-dropdown-element input[type="text"].hidden-input {
   position: absolute;
-  top: 30px;
-  left: 30px;
+  top: 80%;
+  left: 50%;
   opacity: 0;
   cursor: default;
   width: 0px;

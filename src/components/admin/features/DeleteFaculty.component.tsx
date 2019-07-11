@@ -175,10 +175,11 @@ export class DeleteFaculty extends Component {
         fac => !map.has(fac.id)
       );
       this.mobxState.selectedCount = 0;
+      toast("deletetion sucessfull");
     } catch (e) {
       const msg =
         e && e.response
-          ? e.response.message
+          ? e.response.data.message || e.response.message || e.message
           : "Oops something went wrong!!some records may not be deleted";
       await this.fetchAndSetFaculties();
       toast.error(msg);

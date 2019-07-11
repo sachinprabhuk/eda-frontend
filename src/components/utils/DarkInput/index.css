@@ -10,10 +10,11 @@
 }
 
 .dark-input-element input.text-input {
+  box-sizing: border-box;
   border: none;
   padding: 10px 12px;
   border-radius: 3px 3px 2px 2px;
-  font-size: 16px;
+  font-size: 14px;
   outline: none;
   background-color: var(--form-element-bg);
   caret-color: var(--form-element-color);
@@ -26,7 +27,6 @@
   box-sizing: border-box;
   display: block;
   width: 100%;
-  min-width: 290px;
 }
 
 .dark-input-element input.text-input:focus {

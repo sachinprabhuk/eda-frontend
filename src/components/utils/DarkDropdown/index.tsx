@@ -1,103 +1,92 @@
-import React, { Component, RefObject } from "react";
-
+import React, { PureComponent, RefObject } from "react";
 import "./index.css";
 
-export interface IDrowdownoption {
-  value: string;
+export interface ISelectOption {
   label: string;
+  value: string;
 }
 
 interface IProps {
-  labelText?: string;
-  placeholder?: string;
-  initSelected?: IDrowdownoption;
-  fluid?: boolean;
-  justArrow?: boolean;
+  value: ISelectOption | null;
+  onChange: (index: number, item: ISelectOption) => void;
+  options: ISelectOption[];
+
   required?: boolean;
-  options: IDrowdownoption[];
-  onChange: Function;
+  justArrow?: boolean;
+  fluid?: boolean;
+  placeholder?: string;
 }
 
-interface IState {
-  active: boolean;
-  selected: IDrowdownoption | null;
-}
-
-export class DarkDropdown extends React.Component<IProps, IState> {
-  hiddenInputRef: RefObject<HTMLInputElement>;
+export class DarkDropdown extends PureComponent<IProps> {
+  private hiddenInputRef: RefObject<HTMLInputElement>;
+  state = {
+    active: false
+  };
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      active: false,
-      selected: props.initSelected || null
-    };
     this.hiddenInputRef = React.createRef<HTMLInputElement>();
   }
 
-  toggleActive = () => {
+  toggleActive = (e: any) => {
     this.setState({ active: !this.state.active });
   };
-  updateSelected = (e: any) => {
-    const selectedIndex = Number.parseFloat(e.target.value);
-    this.props.onChange(this.props.options[selectedIndex].value);
-    this.setState({
-      selected: this.props.options[selectedIndex],
-      active: false
-    });
-    if (this.props.required)
-      this.hiddenInputRef.current!.value = this.props.options[
-        selectedIndex
-      ].label;
+
+  onOptionSelect = (e: any) => {
+    const {
+      target: { value: index }
+    } = e;
+    this.props.onChange(index, this.props.options[index]);
+    this.setState({ active: false });
+    this.hiddenInputRef.current!.value = this.props.options[index].label;
   };
 
   render() {
+    console.log("Render => Dropdown", this.props.value);
     const { active } = this.state;
-    const selectClasses = "select" + (active ? " active" : "");
-    const optionsClasses = "options" + (active ? " active" : "");
     const ddClasses = ["dropdown"];
+    const selectClass = ["select"];
+    const optionsClass = ["options"];
+    if (active) {
+      selectClass.push("active");
+      optionsClass.push("active");
+    }
     if (this.props.fluid) ddClasses.push("fluid");
-    if (!!this.props.justArrow) ddClasses.push("justArrow");
+    if (this.props.justArrow) ddClasses.push("justArrow");
 
     const requiredMarkup = this.props.required ? (
       <input
         type="text"
         required
         ref={this.hiddenInputRef}
-        className="ddd-hidden"
-        name={"slot type"}
+        className="hidden-input"
       />
     ) : null;
-    const formElementStyle = this.props.justArrow
-      ? {
-          margin: "0px"
-        }
-      : {};
 
     return (
-      <div className="dark-form-element" style={formElementStyle}>
-        {this.props.labelText ? <label>{this.props.labelText}</label> : null}
+      <div className="dark-dropdown-element">
+        {this.props.justArrow ? null : <label>label</label>}
         <div className={ddClasses.join(" ")}>
           {requiredMarkup}
           <div
-            className={selectClasses}
+            className={selectClass.join(" ")}
             tabIndex={0}
             onClick={this.toggleActive}
           >
-            <div className="content">
-              {this.props.justArrow
-                ? null
-                : this.state.selected
-                ? this.state.selected.label
-                : this.props.placeholder}
-            </div>
+            {this.props.justArrow ? null : (
+              <div className="content">
+                {this.props.value
+                  ? this.props.value.label
+                  : this.props.placeholder}
+              </div>
+            )}
             <div className="arrow">&#9662;</div>
           </div>
-          <ul className={optionsClasses}>
+          <ul className={optionsClass.join(" ")}>
             {this.props.options.map((option, idx) => {
               return (
                 <li
                   tabIndex={0}
-                  onClick={this.updateSelected}
+                  onClick={this.onOptionSelect}
                   value={idx}
                   key={idx}
                 >
