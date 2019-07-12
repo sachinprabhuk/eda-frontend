@@ -10,8 +10,8 @@ interface IProps {
   value: ISelectOption | null;
   onChange: (index: number, item: ISelectOption) => void;
   options: ISelectOption[];
-  label: string;
 
+  label?: string;
   style?: CSSProperties;
   required?: boolean;
   justArrow?: boolean;
@@ -65,8 +65,10 @@ export class DarkDropdown extends PureComponent<IProps> {
       />
     ) : null;
 
+    const wrapperStyle = !!this.props.justArrow ? { margin: "0px" } : {};
+
     return (
-      <div className="dark-dropdown-element">
+      <div className="dark-dropdown-element" style={wrapperStyle}>
         {this.props.justArrow ? null : <label>{this.props.label}</label>}
         <div className={ddClasses.join(" ")}>
           {requiredMarkup}

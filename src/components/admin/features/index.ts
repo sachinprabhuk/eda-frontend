@@ -5,3 +5,4 @@ export { DeleteSlot } from "./DeleteSlot.component";
 export { Mail } from "./Mail.component";
 export { Report } from "./Report.component";
 export { Selections } from "./Selections.component";
+export { PendingFaculty } from "./PendingFaculty.component";

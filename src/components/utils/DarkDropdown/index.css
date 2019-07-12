@@ -95,8 +95,8 @@
   border: none;
 }
 
-.dark-dropdown-element div.dropdown.justArrow div.select .arrow {
-  font-size: 24px;
+.dark-dropdown-element div.dropdown.justArrow ul.options {
+  min-width: 120px;
 }
 
 .dark-dropdown-element input[type="text"].hidden-input {

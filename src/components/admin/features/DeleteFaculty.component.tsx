@@ -64,7 +64,7 @@ const DTableHeader = observer(
           <Table.HeaderCell colSpan="5" verticalAlign="middle">
             <span>
               You have selected{" "}
-              <span className="color theme-one" style={{ fontSize: "20px" }}>
+              <span className="select-count-statistic">
                 {props.selectedCount}
               </span>{" "}
               faculties

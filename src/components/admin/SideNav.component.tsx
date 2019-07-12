@@ -56,6 +56,9 @@ export class SideNav extends Component {
           <Menu.Item as={NavLink} to="/admin/home/delete-slot">
             Delete slots
           </Menu.Item>
+          <Menu.Item as={NavLink} to="/admin/home/pending-faculty">
+            Pending faculty
+          </Menu.Item>
           <Menu.Item as={NavLink} to="/admin/home/report">
             Report
           </Menu.Item>

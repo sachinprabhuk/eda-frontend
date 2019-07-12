@@ -15,7 +15,8 @@ import {
   AddSlot,
   DeleteSlot,
   Report,
-  Mail
+  Mail,
+  PendingFaculty
 } from "../../components/admin/features";
 
 interface IAdminHomeProps extends AdminInts.IRootStoreProps {}
@@ -58,6 +59,10 @@ export class AdminHome extends Component<IAdminHomeProps> {
                 <Route path="/admin/home/add-slot" component={AddSlot} />
                 <Route path="/admin/home/delete-slot" component={DeleteSlot} />
                 <Route path="/admin/home/report" component={Report} />
+                <Route
+                  path="/admin/home/pending-faculty"
+                  component={PendingFaculty}
+                />
                 <Route path="/admin/home/mail" component={Mail} />
                 <Route path="/admin/home" exact component={Selections} />
                 <Redirect to="/404" />

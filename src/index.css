@@ -71,3 +71,8 @@ body {
 #\#sidenav > div > a.item.active {
   color: var(--theme-variant-one) !important;
 }
+
+.select-count-statistic {
+  font-size: 20px;
+  color: var(--theme-variant-one);
+}
