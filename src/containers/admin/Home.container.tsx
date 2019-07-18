@@ -15,7 +15,7 @@ import {
   AddSlot,
   DeleteSlot,
   Report,
-  Mail,
+  SendMail,
   PendingFaculty
 } from "../../components/admin/features";
 
@@ -63,7 +63,7 @@ export class AdminHome extends Component<IAdminHomeProps> {
                   path="/admin/home/pending-faculty"
                   component={PendingFaculty}
                 />
-                <Route path="/admin/home/mail" component={Mail} />
+                <Route path="/admin/home/mail" component={SendMail} />
                 <Route path="/admin/home" exact component={Selections} />
                 <Redirect to="/404" />
               </Switch>
