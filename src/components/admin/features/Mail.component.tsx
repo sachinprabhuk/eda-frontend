@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import { observer } from "mobx-react";
 import { toast } from "react-toastify";
-import { observable, runInAction, action, computed, flow } from "mobx";
+import { observable, action, computed, flow } from "mobx";
 
 import { axios } from "../../../shared/axios";
 
@@ -95,7 +95,7 @@ const DTableHeader = observer(
                 name="non-pending"
                 label={
                   <label>
-                    <span style={{ color: "white" }}>Non-pengin</span>
+                    <span style={{ color: "white" }}>Non-pending</span>
                   </label>
                 }
               />
@@ -195,16 +195,13 @@ export class SendMail extends Component {
     }
   };
   applyFilter = (e: any, { checked, name }: CheckboxProps) => {
-    let count = 0;
     if (name === "pending")
       this.mobxState.faculties = this.mobxState.faculties.map(fac => {
-        ++count;
         if (fac.pending) fac.selected = checked as boolean;
         return fac;
       });
     else
       this.mobxState.faculties = this.mobxState.faculties.map(fac => {
-        ++count;
         if (!fac.pending) fac.selected = checked as boolean;
         return fac;
       });
@@ -214,7 +211,7 @@ export class SendMail extends Component {
     return (
       <>
         <Header className="color theme-one" as="h1" style={{ fontWeight: 400 }}>
-          Delete faculties
+          Mail service
         </Header>
         <Grid>
           {this.mobxState.fetchingFaculties ? (

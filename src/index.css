@@ -76,3 +76,31 @@ body {
   font-size: 20px;
   color: var(--theme-variant-one);
 }
+
+.ui.modal.transition.visible.active {
+  top: 30% !important;
+}
+
+.modal-trigger {
+  border: 1px solid var(--theme-variant-one);
+  color: var(--theme-variant-one);
+  padding: 6px 12px;
+  transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+
+.modal-trigger:hover {
+  color: black;
+  background-color: var(--theme-variant-one);
+  cursor: pointer;
+}
+
+#sidenav .logout {
+  cursor: pointer;
+  color: var(--theme-variant-one);
+  border: 1px dashed var(--theme-variant-one);
+  text-align: center;
+}
+
+#sidenav .logout:hover {
+  color: var(--theme-variant-one);
+}

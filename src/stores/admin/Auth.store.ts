@@ -8,7 +8,7 @@ export interface IAuthStore {
   checkingAuthStatus: boolean;
 
   checkAuth(): void;
-  setToken(token: string): void;
+  setToken(token: string | null): void;
 }
 
 export class AuthStore implements IAuthStore {

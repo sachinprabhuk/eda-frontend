@@ -1,10 +1,20 @@
 import React, { Component } from "react";
-import { Menu, Image, Segment, Divider } from "semantic-ui-react";
-import FLlogo from "../../shared/assets/finite-loop-logo.png";
+import { Menu, Segment, Divider } from "semantic-ui-react";
+// import FLlogo from "../../shared/assets/finite-loop-logo.png";
 
 import { NavLink } from "react-router-dom";
+import { inject } from "mobx-react";
+import { IRootStore } from "../../stores/admin/Root.store";
 
-export class SideNav extends Component {
+interface ISideNav {
+  rootStore?: IRootStore;
+}
+
+@inject("rootStore")
+export class SideNav extends Component<ISideNav> {
+  logout = (e: any) => {
+    this.props.rootStore!.authStore.setToken(null);
+  };
   render() {
     return (
       <Segment
@@ -13,7 +23,7 @@ export class SideNav extends Component {
           height: "100vh",
           overflowY: "scroll"
         }}
-        id="#sidenav"
+        id="sidenav"
       >
         <Menu
           vertical
@@ -66,10 +76,14 @@ export class SideNav extends Component {
             Mail faculty
           </Menu.Item>
           <Divider />
-          <Menu.Header style={{ display: "grid", justifyItems: "center" }}>
+          <Menu.Item className="logout" as="span">
+            Logout
+          </Menu.Item>
+          {/* <Divider /> */}
+          {/* <Menu.Header style={{ display: "grid", justifyItems: "center" }}>
             <Image src={FLlogo} size="small" />
             <Menu.Item>A finite loop product</Menu.Item>
-          </Menu.Header>
+          </Menu.Header> */}
         </Menu>
       </Segment>
     );
